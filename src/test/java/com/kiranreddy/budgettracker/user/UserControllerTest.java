@@ -1,0 +1,91 @@
+package com.kiranreddy.budgettracker.user;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@RunWith(SpringRunner.class)
+@WebMvcTest({ UserController.class })
+public class UserControllerTest {
+
+	@MockBean
+	private UserService userService;
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	@Autowired
+	private ObjectMapper objectMapper;
+
+	@Test
+	public void retrieveUsersTest() throws Exception {
+		when(userService.retrieveUsers())
+				.thenReturn(Arrays.asList(new User(1L, "first", "last", "email@email.com", "password")));
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/users")).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].firstName").value("first"))
+				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].lastName").value("last"))
+				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].email").value("email@email.com"))
+				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].password").doesNotExist());
+	}
+
+	@Test
+	public void findUserTest() throws Exception {
+		when(userService.findUser(1L)).thenReturn(new User(1L, "first", "last", "email@email.com", "password"));
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/users/1")).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("first"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("last"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email@email.com"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.password").doesNotExist());
+	}
+
+	@Test
+	public void saveUserTest() throws Exception {
+		User user = new User(null, "first", "last", "email@email.com", null);
+		when(userService.saveUser(any())).thenReturn(new User(1L, "first", "last", "email@email.com", "password"));
+
+		mockMvc.perform(MockMvcRequestBuilders.post("/users").content(objectMapper.writeValueAsString(user))
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("first"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("last"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email@email.com"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.password").doesNotExist());
+	}
+
+	@Test
+	public void updateUserTest() throws Exception {
+		User user = new User(1L, "first", "last", "email@email.com", null);
+		when(userService.updateUser(any(), any()))
+				.thenReturn(new User(1L, "first", "last", "email@email.com", "password"));
+
+		mockMvc.perform(MockMvcRequestBuilders.post("/users/1").content(objectMapper.writeValueAsString(user))
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("first"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("last"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email@email.com"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.password").doesNotExist());
+	}
+}
