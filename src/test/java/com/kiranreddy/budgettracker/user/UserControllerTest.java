@@ -1,6 +1,8 @@
 package com.kiranreddy.budgettracker.user;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -35,7 +37,6 @@ public class UserControllerTest {
 	public void retrieveUsersTest() throws Exception {
 		when(userService.retrieveUsers())
 				.thenReturn(Arrays.asList(new User(1L, "first", "last", "email@email.com", "password")));
-
 		mockMvc.perform(MockMvcRequestBuilders.get("/users")).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].id").value(1L))
@@ -48,7 +49,6 @@ public class UserControllerTest {
 	@Test
 	public void findUserTest() throws Exception {
 		when(userService.findUser(1L)).thenReturn(new User(1L, "first", "last", "email@email.com", "password"));
-
 		mockMvc.perform(MockMvcRequestBuilders.get("/users/1")).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
@@ -59,10 +59,22 @@ public class UserControllerTest {
 	}
 
 	@Test
+	public void findInvalidUserTest() throws Exception {
+		when(userService.findUser(1L)).thenThrow(new UserNotFoundException("User not found"));
+		mockMvc.perform(MockMvcRequestBuilders.get("/users/1")).andExpect(MockMvcResultMatchers.status().isNotFound());
+	}
+
+	@Test
+	public void deleteUserTest() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.delete("/users/1")).andExpect(MockMvcResultMatchers.status().isOk());
+		verify(userService,times(1)).deleteUser(1L);
+	}
+
+	
+	@Test
 	public void saveUserTest() throws Exception {
 		User user = new User(null, "first", "last", "email@email.com", null);
 		when(userService.saveUser(any())).thenReturn(new User(1L, "first", "last", "email@email.com", "password"));
-
 		mockMvc.perform(MockMvcRequestBuilders.post("/users").content(objectMapper.writeValueAsString(user))
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -78,7 +90,6 @@ public class UserControllerTest {
 		User user = new User(1L, "first", "last", "email@email.com", null);
 		when(userService.updateUser(any(), any()))
 				.thenReturn(new User(1L, "first", "last", "email@email.com", "password"));
-
 		mockMvc.perform(MockMvcRequestBuilders.post("/users/1").content(objectMapper.writeValueAsString(user))
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))

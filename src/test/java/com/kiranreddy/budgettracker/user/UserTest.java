@@ -32,7 +32,7 @@ public class UserTest {
 		User user = new User(null,"first","last","email@email.com","password");
 		testEntityManager.persistAndFlush(user);
 		
-		Assertions.assertThat(user.getId()).isEqualTo(1L);
+		Assertions.assertThat(user.getId()).isNotNull();
 		Assertions.assertThat(user.getFirstName()).isEqualTo("first");
 		Assertions.assertThat(user.getLastName()).isEqualTo("last");
 		Assertions.assertThat(user.getEmail()).isEqualTo("email@email.com");
