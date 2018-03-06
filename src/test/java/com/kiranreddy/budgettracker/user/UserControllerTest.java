@@ -90,7 +90,7 @@ public class UserControllerTest {
 		User user = new User(1L, "first", "last", "email@email.com", null);
 		when(userService.updateUser(any(), any()))
 				.thenReturn(new User(1L, "first", "last", "email@email.com", "password"));
-		mockMvc.perform(MockMvcRequestBuilders.post("/users/1").content(objectMapper.writeValueAsString(user))
+		mockMvc.perform(MockMvcRequestBuilders.put("/users/1").content(objectMapper.writeValueAsString(user))
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))

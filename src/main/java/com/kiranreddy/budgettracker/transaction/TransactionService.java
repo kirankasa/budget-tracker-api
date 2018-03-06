@@ -36,4 +36,13 @@ public class TransactionService {
 		deleteTransaction(transaction);
 	}
 
+	public Transaction saveTransaction(Transaction transaction) {
+		return transactionRepository.save(transaction);
+	}
+
+	public Transaction updateTransaction(Long transactionId, Transaction transactionInput) {
+		findTransaction(transactionId);
+		return transactionRepository.save(transactionInput);
+	}
+
 }

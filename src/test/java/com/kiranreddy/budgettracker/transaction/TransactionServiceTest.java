@@ -50,7 +50,7 @@ public class TransactionServiceTest {
 	}
 
 	@Test
-	public void findValidUserTest() {
+	public void findValidTransactionTest() {
 		Date date = new Date();
 		when(transactionRepository.findById(1L))
 				.thenReturn(Optional.of(new Transaction(1L, "type", 100.00, date, "note")));
@@ -64,18 +64,50 @@ public class TransactionServiceTest {
 	}
 
 	@Test
-	public void findInValidUserTest() {
+	public void findInValidTransactionTest() {
 		when(transactionRepository.findById(1L)).thenReturn(Optional.empty());
 		thrown.expect(UserNotFoundException.class);
 		transactionService.findTransaction(1L);
 	}
-	
+
 	@Test
 	public void deleteTransactionTest() {
 		Date date = new Date();
 		Transaction transaction = new Transaction(1L, "type", 100.00, date, "note");
 		transactionService.deleteTransaction(transaction);
-		verify(transactionRepository,times(1)).delete(transaction);
+		verify(transactionRepository, times(1)).delete(transaction);
+	}
+
+	@Test
+	public void saveTransactionTest() {
+		Date date = new Date();
+		Transaction transactionInput = new Transaction(null, "type", 100.00, date, "note");
+		when(transactionRepository.save(transactionInput))
+				.thenReturn(new Transaction(1L, "type", 100.00, date, "note"));
+
+		Transaction transaction = transactionService.saveTransaction(transactionInput);
+		Assertions.assertThat(transaction.getId()).isNotNull().isPositive();
+		Assertions.assertThat(transaction.getType()).isEqualTo("type");
+		Assertions.assertThat(transaction.getAmount()).isEqualTo(100.00);
+		Assertions.assertThat(transaction.getDate()).isEqualTo(date);
+		Assertions.assertThat(transaction.getNote()).isEqualTo("note");
+	}
+
+	@Test
+	public void updateTransactionTest() {
+		Date date = new Date();
+		Transaction transactionInput = new Transaction(1L, "type", 100.00, date, "note");
+		when(transactionRepository.findById(1L))
+		.thenReturn(Optional.of(transactionInput));
+		when(transactionRepository.save(transactionInput))
+				.thenReturn(new Transaction(1L, "type", 100.00, date, "note"));
+
+		Transaction transaction = transactionService.updateTransaction(1L, transactionInput);
+		Assertions.assertThat(transaction.getId()).isEqualTo(1L);
+		Assertions.assertThat(transaction.getType()).isEqualTo("type");
+		Assertions.assertThat(transaction.getAmount()).isEqualTo(100.00);
+		Assertions.assertThat(transaction.getDate()).isEqualTo(date);
+		Assertions.assertThat(transaction.getNote()).isEqualTo("note");
 	}
 
 }
