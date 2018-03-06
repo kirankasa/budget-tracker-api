@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TransactionRepositoryTest {
 
 	@Autowired
-	private TransationRepository transationRepository;
+	private TransactionRepository transationRepository;
 	
 	@Test
 	public void saveUserTest() {
