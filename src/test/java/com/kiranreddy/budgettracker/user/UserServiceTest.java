@@ -70,13 +70,17 @@ public class UserServiceTest {
 		Assertions.assertThat(user.getEmail()).isEqualTo("email@email.com");
 		Assertions.assertThat(user.getPassword()).isEqualTo("password");
 	}
-	
+
 	@Test
 	public void updateUserTest() {
-		User userInput = new User(1L, "firstUpdated", "last", "email@email.com", "password");
-		when(userRepository.save(userInput)).thenReturn(new User(1L, "firstUpdated", "last", "email@email.com", "password"));
+		User userInput = new User(1L, "first", "last", "email@email.com", "password");
+		when(userRepository.findById(1L))
+				.thenReturn(Optional.of(userInput));
 
-		User user = userService.saveUser(userInput);
+		when(userRepository.save(userInput))
+				.thenReturn(new User(1L, "firstUpdated", "last", "email@email.com", "password"));
+
+		User user = userService.updateUser(userInput.getId(), userInput);
 		Assertions.assertThat(user.getId()).isEqualTo(1L);
 		Assertions.assertThat(user.getFirstName()).isEqualTo("firstUpdated");
 		Assertions.assertThat(user.getLastName()).isEqualTo("last");
@@ -90,11 +94,11 @@ public class UserServiceTest {
 		thrown.expect(UserNotFoundException.class);
 		userService.findUser(2L);
 	}
-	
+
 	@Test
 	public void deleteUserTest() {
 		User userInput = new User(1L, "firstUpdated", "last", "email@email.com", "password");
 		userService.deleteUser(userInput);
-		verify(userRepository,times(1)).delete(userInput);
+		verify(userRepository, times(1)).delete(userInput);
 	}
 }

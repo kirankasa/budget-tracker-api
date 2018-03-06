@@ -5,6 +5,10 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Transaction {
@@ -17,10 +21,12 @@ public class Transaction {
 
 	private Double amount;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
 	private String note;
-	
+
 	public Transaction() {
 	}
 
