@@ -5,6 +5,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -43,7 +44,7 @@ public class TransactionControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].id").value(1L))
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].type").value("type"))
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].amount").value(100.00))
-				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].date").value("2018-03-06"))
+				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].date").value(new SimpleDateFormat("yyyy-MM-dd").format(new Date())))
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].note").value("note"));
 	}
 
@@ -56,7 +57,7 @@ public class TransactionControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.type").value("type"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.amount").value(100.00))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.date").value("2018-03-06"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.date").value(new SimpleDateFormat("yyyy-MM-dd").format(new Date())))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.note").value("note"));
 	}
 
@@ -73,7 +74,7 @@ public class TransactionControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.type").value("type"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.amount").value(100.00))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.date").value("2018-03-06"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.date").value(new SimpleDateFormat("yyyy-MM-dd").format(new Date())))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.note").value("note"));
 	}
 
@@ -90,7 +91,7 @@ public class TransactionControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.type").value("typeUpdated"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.amount").value(100.00))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.date").value("2018-03-06"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.date").value(new SimpleDateFormat("yyyy-MM-dd").format(new Date())))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.note").value("note"));
 	}
 
