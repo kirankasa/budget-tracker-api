@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kiranreddy.budgettracker.user.UserNotFoundException;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest({ TransactionController.class })
