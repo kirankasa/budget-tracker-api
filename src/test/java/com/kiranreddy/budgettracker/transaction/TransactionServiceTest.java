@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.kiranreddy.budgettracker.category.TransactionCategory;
 import com.kiranreddy.budgettracker.user.UserNotFoundException;
 
 @RunWith(SpringRunner.class)
@@ -37,8 +38,8 @@ public class TransactionServiceTest {
 	@Test
 	public void retrieveTransactionsTest() {
 		Date date = new Date();
-		when(transactionRepository.findAll())
-				.thenReturn(Arrays.asList(new Transaction(1L, "type", 100.00, date, "note")));
+		when(transactionRepository.findAll()).thenReturn(Arrays.asList(
+				new Transaction(1L, "type", 100.00, date, "note", new TransactionCategory(1L, "category", "type"))));
 		List<Transaction> transactions = transactionService.retrieveTransactions();
 		Assertions.assertThat(transactions).hasSize(1);
 
@@ -47,13 +48,17 @@ public class TransactionServiceTest {
 		Assertions.assertThat(transactions.iterator().next().getAmount()).isEqualTo(100.00);
 		Assertions.assertThat(transactions.iterator().next().getDate()).isEqualTo(date);
 		Assertions.assertThat(transactions.iterator().next().getNote()).isEqualTo("note");
+		Assertions.assertThat(transactions.iterator().next().getCategory().getCategory())
+				.isEqualTo("category");
+		Assertions.assertThat(transactions.iterator().next().getCategory().getId()).isEqualTo(1L);
+		Assertions.assertThat(transactions.iterator().next().getCategory().getType()).isEqualTo("type");
 	}
 
 	@Test
 	public void findValidTransactionTest() {
 		Date date = new Date();
-		when(transactionRepository.findById(1L))
-				.thenReturn(Optional.of(new Transaction(1L, "type", 100.00, date, "note")));
+		when(transactionRepository.findById(1L)).thenReturn(Optional.of(
+				new Transaction(1L, "type", 100.00, date, "note", new TransactionCategory(1L, "category", "type"))));
 		Transaction transaction = transactionService.findTransaction(1L);
 
 		Assertions.assertThat(transaction.getId()).isEqualTo(1L);
@@ -73,7 +78,8 @@ public class TransactionServiceTest {
 	@Test
 	public void deleteTransactionTest() {
 		Date date = new Date();
-		Transaction transaction = new Transaction(1L, "type", 100.00, date, "note");
+		Transaction transaction = new Transaction(1L, "type", 100.00, date, "note",
+				new TransactionCategory(1L, "category", "type"));
 		transactionService.deleteTransaction(transaction);
 		verify(transactionRepository, times(1)).delete(transaction);
 	}
@@ -81,9 +87,10 @@ public class TransactionServiceTest {
 	@Test
 	public void saveTransactionTest() {
 		Date date = new Date();
-		Transaction transactionInput = new Transaction(null, "type", 100.00, date, "note");
-		when(transactionRepository.save(transactionInput))
-				.thenReturn(new Transaction(1L, "type", 100.00, date, "note"));
+		Transaction transactionInput = new Transaction(null, "type", 100.00, date, "note",
+				new TransactionCategory(1L, "category", "type"));
+		when(transactionRepository.save(transactionInput)).thenReturn(
+				new Transaction(1L, "type", 100.00, date, "note", new TransactionCategory(1L, "category", "type")));
 
 		Transaction transaction = transactionService.saveTransaction(transactionInput);
 		Assertions.assertThat(transaction.getId()).isNotNull().isPositive();
@@ -96,11 +103,11 @@ public class TransactionServiceTest {
 	@Test
 	public void updateTransactionTest() {
 		Date date = new Date();
-		Transaction transactionInput = new Transaction(1L, "type", 100.00, date, "note");
-		when(transactionRepository.findById(1L))
-		.thenReturn(Optional.of(transactionInput));
-		when(transactionRepository.save(transactionInput))
-				.thenReturn(new Transaction(1L, "type", 100.00, date, "note"));
+		Transaction transactionInput = new Transaction(1L, "type", 100.00, date, "note",
+				new TransactionCategory(1L, "category", "type"));
+		when(transactionRepository.findById(1L)).thenReturn(Optional.of(transactionInput));
+		when(transactionRepository.save(transactionInput)).thenReturn(
+				new Transaction(1L, "type", 100.00, date, "note", new TransactionCategory(1L, "category", "type")));
 
 		Transaction transaction = transactionService.updateTransaction(1L, transactionInput);
 		Assertions.assertThat(transaction.getId()).isEqualTo(1L);
