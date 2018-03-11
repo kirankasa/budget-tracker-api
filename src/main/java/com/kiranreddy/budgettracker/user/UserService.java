@@ -36,8 +36,7 @@ public class UserService {
 	}
 
 	public void deleteUser(Long id) {
-		Optional<User> optionalUser = userRepository.findById(id);
-		User user = optionalUser.orElseThrow(() -> new UserNotFoundException("No User found with user id " + id));
+		User user = findUser(id);
 		deleteUser(user);
 	}
 
