@@ -2,6 +2,9 @@ package com.kiranreddy.budgettracker.category;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class TransactionCategoryService {
 
 	private TransactionCategoryRepository transactionCategoryRepository;
