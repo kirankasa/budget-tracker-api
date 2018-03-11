@@ -74,8 +74,7 @@ public class UserServiceTest {
 	@Test
 	public void updateUserTest() {
 		User userInput = new User(1L, "first", "last", "email@email.com", "password");
-		when(userRepository.findById(1L))
-				.thenReturn(Optional.of(userInput));
+		when(userRepository.findById(1L)).thenReturn(Optional.of(userInput));
 
 		when(userRepository.save(userInput))
 				.thenReturn(new User(1L, "firstUpdated", "last", "email@email.com", "password"));
@@ -99,6 +98,15 @@ public class UserServiceTest {
 	public void deleteUserTest() {
 		User userInput = new User(1L, "firstUpdated", "last", "email@email.com", "password");
 		userService.deleteUser(userInput);
+		verify(userRepository, times(1)).delete(userInput);
+	}
+
+	@Test
+	public void deleteUserByIdTest() {
+		User userInput = new User(1L, "firstUpdated", "last", "email@email.com", "password");
+		when(userRepository.findById(1L)).thenReturn(Optional.of(userInput));
+		userService.deleteUser(1L);
+		verify(userRepository, times(1)).findById(1L);
 		verify(userRepository, times(1)).delete(userInput);
 	}
 }

@@ -84,6 +84,17 @@ public class TransactionServiceTest {
 		verify(transactionRepository, times(1)).delete(transaction);
 	}
 
+	
+	@Test
+	public void deleteTransactionByIdTest() {
+		Date date = new Date();
+		Transaction transaction = new Transaction(1L, "type", 100.00, date, "note",
+				new TransactionCategory(1L, "category", "type"));
+		when(transactionRepository.findById(1L)).thenReturn(Optional.of(transaction));
+		transactionService.deleteTransaction(1L);
+		verify(transactionRepository, times(1)).findById(1L);
+		verify(transactionRepository, times(1)).delete(transaction);
+	}
 	@Test
 	public void saveTransactionTest() {
 		Date date = new Date();
