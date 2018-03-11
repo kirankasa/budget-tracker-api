@@ -30,6 +30,7 @@ public class UserTest {
 	@Test
 	public void userMappingTest() {
 		User user = new User(null,"first","last","email@email.com","password");
+		user.setPassword("password");
 		testEntityManager.persistAndFlush(user);
 		
 		Assertions.assertThat(user.getId()).isNotNull();
