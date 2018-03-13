@@ -5,7 +5,9 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,7 +19,7 @@ import com.kiranreddy.budgettracker.category.TransactionCategory;
 public class Transaction {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String type;
@@ -30,7 +32,8 @@ public class Transaction {
 
 	private String note;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name="category_id")
 	private TransactionCategory category;
 
 	public Transaction() {
