@@ -21,6 +21,7 @@ public class TransactionRepositoryTest {
 	private TransactionRepository transationRepository;
 
 	@Test
+	@Sql(statements = { "insert into transaction_category values('1','category','type')" })
 	public void saveTransactionTest() {
 		Date date = new Date();
 		Transaction transaction = new Transaction(null, "type", 100.00, date, "note",
