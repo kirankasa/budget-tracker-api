@@ -38,19 +38,7 @@ public class TransactionCategoryControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders.get("/transactions/categories"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].id").value(1L))
-				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].category").value("category"))
-				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].type").value("type"));
-	}
-
-	@Test
-	public void retrieveCategoriesByTypeTest() throws Exception {
-		when(transactionCategoryService.retrieveTransactionCategoriesByType("type"))
-				.thenReturn(Arrays.asList(new TransactionCategory(1L, "category", "type")));
-		mockMvc.perform(MockMvcRequestBuilders.get("/transactions/categories").param("type", "type"))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].id").value(1L))
-				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].category").value("category"))
-				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].type").value("type"));
+				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].category").value("category"));
 	}
 
 	@Test
@@ -60,8 +48,7 @@ public class TransactionCategoryControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders.get("/transactions/categories/1"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.category").value("category"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.type").value("type"));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.category").value("category"));
 	}
 
 	@Test
@@ -81,8 +68,7 @@ public class TransactionCategoryControllerTest {
 				.content(objectMapper.writeValueAsString(new TransactionCategory(null, "category", "type"))))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.category").value("category"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.type").value("type"));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.category").value("category"));
 	}
 
 	@Test
@@ -94,7 +80,6 @@ public class TransactionCategoryControllerTest {
 				.content(objectMapper.writeValueAsString(new TransactionCategory(1L, "category", "type"))))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.category").value("category"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.type").value("type"));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.category").value("category"));
 	}
 }

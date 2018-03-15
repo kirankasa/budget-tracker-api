@@ -13,8 +13,6 @@ public class TransactionCategory {
 	private Long id;
 
 	private String category;
-
-	private String type;
 	
 	public TransactionCategory() {
 	}
@@ -22,7 +20,6 @@ public class TransactionCategory {
 	public TransactionCategory(Long id, String category, String type) {
 		this.id = id;
 		this.category = category;
-		this.type = type;
 	}
 
 	public Long getId() {
@@ -40,16 +37,5 @@ public class TransactionCategory {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-	
-	
-	
 
 }

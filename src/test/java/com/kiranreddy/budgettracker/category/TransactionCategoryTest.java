@@ -21,7 +21,6 @@ public class TransactionCategoryTest {
 		TransactionCategory transactionCategory =new TransactionCategory(1L,"category","type");
 		Assertions.assertThat(transactionCategory.getId()).isEqualTo(1L);
 		Assertions.assertThat(transactionCategory.getCategory()).isEqualTo("category");
-		Assertions.assertThat(transactionCategory.getType()).isEqualTo("type");
 	}
 
 	@Test
@@ -30,6 +29,5 @@ public class TransactionCategoryTest {
 		testEntityManager.persistAndFlush(transactionCategory);
 		Assertions.assertThat(transactionCategory.getId()).isNotNull().isPositive();
 		Assertions.assertThat(transactionCategory.getCategory()).isEqualTo("category");
-		Assertions.assertThat(transactionCategory.getType()).isEqualTo("type");
 	}
 }

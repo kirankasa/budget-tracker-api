@@ -49,8 +49,7 @@ public class TransactionControllerTest {
 						.value(new SimpleDateFormat("yyyy-MM-dd").format(new Date())))
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].note").value("note"))
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].category.id").value(1L))
-				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].category.category").value("category"))
-				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].category.type").value("type"));
+				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].category.category").value("category"));
 	}
 
 	@Test
@@ -66,8 +65,7 @@ public class TransactionControllerTest {
 						.value(new SimpleDateFormat("yyyy-MM-dd").format(new Date())))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.note").value("note"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.category.id").value(1L))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.category.category").value("category"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.category.type").value("type"));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.category.category").value("category"));
 	}
 
 	@Test
@@ -88,8 +86,7 @@ public class TransactionControllerTest {
 						.value(new SimpleDateFormat("yyyy-MM-dd").format(new Date())))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.note").value("note"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.category.id").value(1L))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.category.category").value("category"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.category.type").value("type"));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.category.category").value("category"));
 	}
 
 	@Test
@@ -110,8 +107,7 @@ public class TransactionControllerTest {
 						.value(new SimpleDateFormat("yyyy-MM-dd").format(new Date())))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.note").value("note"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.category.id").value(1L))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.category.category").value("category"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.category.type").value("type"));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.category.category").value("category"));
 	}
 
 	@Test
