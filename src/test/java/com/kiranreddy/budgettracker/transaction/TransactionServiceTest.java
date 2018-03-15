@@ -51,7 +51,6 @@ public class TransactionServiceTest {
 		Assertions.assertThat(transactions.iterator().next().getCategory().getCategory())
 				.isEqualTo("category");
 		Assertions.assertThat(transactions.iterator().next().getCategory().getId()).isEqualTo(1L);
-		Assertions.assertThat(transactions.iterator().next().getCategory().getType()).isEqualTo("type");
 	}
 
 	@Test

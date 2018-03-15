@@ -38,7 +38,6 @@ public class TransactionCategoryServiceTest {
 
 		Assertions.assertThat(transactionCategories.iterator().next().getId()).isNotNull().isPositive();
 		Assertions.assertThat(transactionCategories.iterator().next().getCategory()).isEqualTo("category");
-		Assertions.assertThat(transactionCategories.iterator().next().getType()).isEqualTo("type");
 	}
 
 	@Test
@@ -49,7 +48,6 @@ public class TransactionCategoryServiceTest {
 
 		Assertions.assertThat(transactionCategory.getId()).isNotNull().isPositive();
 		Assertions.assertThat(transactionCategory.getCategory()).isEqualTo("category");
-		Assertions.assertThat(transactionCategory.getType()).isEqualTo("type");
 	}
 
 	@Test
@@ -57,19 +55,6 @@ public class TransactionCategoryServiceTest {
 		when(transactionCategoryRepository.findById(1L)).thenReturn(Optional.empty());
 		thrown.expect(TransactionCategoryNotFoundException.class);
 		transactionCategoryService.retrieveTransactionCategoryById(1L);
-	}
-
-	@Test
-	public void retrieveTransactionCategoriesByTypeTest() {
-		when(transactionCategoryRepository.findByType("type"))
-				.thenReturn(Arrays.asList(new TransactionCategory(1L, "category", "type")));
-		List<TransactionCategory> transactionCategories = transactionCategoryService
-				.retrieveTransactionCategoriesByType("type");
-		Assertions.assertThat(transactionCategories).hasSize(1);
-
-		Assertions.assertThat(transactionCategories.iterator().next().getId()).isNotNull().isPositive();
-		Assertions.assertThat(transactionCategories.iterator().next().getCategory()).isEqualTo("category");
-		Assertions.assertThat(transactionCategories.iterator().next().getType()).isEqualTo("type");
 	}
 
 	@Test
@@ -81,7 +66,6 @@ public class TransactionCategoryServiceTest {
 				.saveTransactionCategory(transactionCategoryInput);
 		Assertions.assertThat(transactionCategory.getId()).isNotNull().isPositive();
 		Assertions.assertThat(transactionCategory.getCategory()).isEqualTo("category");
-		Assertions.assertThat(transactionCategory.getType()).isEqualTo("type");
 	}
 
 	@Test
@@ -94,7 +78,6 @@ public class TransactionCategoryServiceTest {
 				.updateTransactionCategory(transactionCategoryInput, 1L);
 		Assertions.assertThat(transactionCategory.getId()).isNotNull().isPositive();
 		Assertions.assertThat(transactionCategory.getCategory()).isEqualTo("categoryupdate");
-		Assertions.assertThat(transactionCategory.getType()).isEqualTo("type");
 	}
 
 }

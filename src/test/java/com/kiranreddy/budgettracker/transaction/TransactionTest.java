@@ -32,11 +32,10 @@ public class TransactionTest {
 		Assertions.assertThat(transaction.getDate()).isEqualTo(date);
 		Assertions.assertThat(transaction.getNote()).isEqualTo("note");
 		Assertions.assertThat(transaction.getCategory().getCategory()).isEqualTo("category");
-		Assertions.assertThat(transaction.getCategory().getType()).isEqualTo("type");
 	}
 
 	@Test
-	@Sql(statements = { "insert into transaction_category values('1','category','type')" })
+	@Sql(statements = { "insert into transaction_category values('1','category')" })
 	public void transactionMappingTest() {
 		Date date = new Date();
 		Transaction transaction = new Transaction(null, "type", 100.00, date, "note",
@@ -49,6 +48,5 @@ public class TransactionTest {
 		Assertions.assertThat(transaction.getDate()).isEqualTo(date);
 		Assertions.assertThat(transaction.getNote()).isEqualTo("note");
 		Assertions.assertThat(transaction.getCategory().getCategory()).isEqualTo("category");
-		Assertions.assertThat(transaction.getCategory().getType()).isEqualTo("type");
 	}
 }

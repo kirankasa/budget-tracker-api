@@ -23,7 +23,6 @@ public class TransactionCategoryRepositoryTest {
 
 		Assertions.assertThat(transactionCategory.getId()).isNotNull().isPositive();
 		Assertions.assertThat(transactionCategory.getCategory()).isEqualTo("category");
-		Assertions.assertThat(transactionCategory.getType()).isEqualTo("type");
 	}
 
 	@Test
@@ -35,22 +34,5 @@ public class TransactionCategoryRepositoryTest {
 
 		Assertions.assertThat(transactionCategories.iterator().next().getId()).isNotNull().isPositive();
 		Assertions.assertThat(transactionCategories.iterator().next().getCategory()).isEqualTo("category");
-		Assertions.assertThat(transactionCategories.iterator().next().getType()).isEqualTo("type");
 	}
-
-	@Test
-	public void findByTypeTest() {
-		TransactionCategory transactionCategory1 = new TransactionCategory(1L, "category", "type1");
-		transactionCategoryRepository.save(transactionCategory1);
-		TransactionCategory transactionCategory2 = new TransactionCategory(2L, "category", "type2");
-		transactionCategoryRepository.save(transactionCategory2);
-
-		List<TransactionCategory> transactionCategories = transactionCategoryRepository.findByType("type1");
-		Assertions.assertThat(transactionCategories).hasSize(1);
-
-		Assertions.assertThat(transactionCategories.iterator().next().getId()).isNotNull().isPositive();
-		Assertions.assertThat(transactionCategories.iterator().next().getCategory()).isEqualTo("category");
-		Assertions.assertThat(transactionCategories.iterator().next().getType()).isEqualTo("type1");
-	}
-
 }

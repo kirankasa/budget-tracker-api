@@ -23,10 +23,6 @@ public class TransactionCategoryService {
 						"Transaction Category Not found with id " + transactionCategoryId));
 	}
 
-	public List<TransactionCategory> retrieveTransactionCategoriesByType(String type) {
-		return transactionCategoryRepository.findByType(type);
-	}
-
 	public TransactionCategory saveTransactionCategory(TransactionCategory transactionCategory) {
 		return transactionCategoryRepository.save(transactionCategory);
 	}
