@@ -1,4 +1,4 @@
-package com.kiranreddy.budgettracker;
+package com.kiranreddy.budgettracker.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

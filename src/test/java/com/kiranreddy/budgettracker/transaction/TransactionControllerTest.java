@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -25,6 +27,7 @@ import com.kiranreddy.budgettracker.category.TransactionCategory;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest({ TransactionController.class })
+@WithMockUser(roles = "USER")
 public class TransactionControllerTest {
 
 	@MockBean
@@ -76,7 +79,7 @@ public class TransactionControllerTest {
 				"note", new TransactionCategory(1L, "category", "type")));
 		mockMvc.perform(
 				MockMvcRequestBuilders.post("/transactions").content(objectMapper.writeValueAsString(transaction))
-						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).with(csrf()))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
@@ -97,7 +100,7 @@ public class TransactionControllerTest {
 				new Date(), "note", new TransactionCategory(1L, "category", "type")));
 		mockMvc.perform(
 				MockMvcRequestBuilders.put("/transactions/1").content(objectMapper.writeValueAsString(transaction))
-						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+						.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).with(csrf()))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
@@ -112,7 +115,7 @@ public class TransactionControllerTest {
 
 	@Test
 	public void deletTransactionTest() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.delete("/transactions/1"))
+		mockMvc.perform(MockMvcRequestBuilders.delete("/transactions/1").with(csrf()))
 				.andExpect(MockMvcResultMatchers.status().isOk());
 		verify(transactionService, times(1)).deleteTransaction(1L);
 	}
