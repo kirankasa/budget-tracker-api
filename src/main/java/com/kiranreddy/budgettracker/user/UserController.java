@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,16 +29,16 @@ public class UserController {
 	@Value("${jwt.header}")
 	private String tokenHeader;
 
-	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
-	@Autowired
-	@Qualifier("jwtUserDetailsService")
-	private UserDetailsService userDetailsService;
+	private UserDetailsService jwtUserDetailsService;
 
 	private UserService userService;
 
-	public UserController(UserService userService) {
+	public UserController(JwtTokenUtil jwtTokenUtil, UserDetailsService jwtUserDetailsService,
+			UserService userService) {
+		this.jwtTokenUtil = jwtTokenUtil;
+		this.jwtUserDetailsService = jwtUserDetailsService;
 		this.userService = userService;
 	}
 
@@ -79,7 +77,7 @@ public class UserController {
 	public JwtUser getAuthenticatedUser(HttpServletRequest request) {
 		String token = request.getHeader(tokenHeader).substring(7);
 		String username = jwtTokenUtil.getUsernameFromToken(token);
-		JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+		JwtUser user = (JwtUser) jwtUserDetailsService.loadUserByUsername(username);
 		return user;
 	}
 }
