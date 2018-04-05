@@ -21,7 +21,7 @@ public class TransactionRepositoryTest {
 	private TransactionRepository transationRepository;
 
 	@Test
-	@Sql(statements = { "insert into transaction_category values('1','category')" })
+	@Sql(statements = { "insert into transaction_category(id, category) values('1','category')" })
 	public void saveTransactionTest() {
 		Date date = new Date();
 		Transaction transaction = new Transaction(null, "type", 100.00, date, "note",
@@ -37,7 +37,7 @@ public class TransactionRepositoryTest {
 	}
 
 	@Test
-	@Sql(statements = { "insert into transaction_category values('1','category')" })
+	@Sql(statements = { "insert into transaction_category(id,category) values('1','category')" })
 	public void fetchTransactionsTest() {
 		Date date = new Date();
 		Transaction transaction = new Transaction(1L, "type", 100.00, date, "note",
