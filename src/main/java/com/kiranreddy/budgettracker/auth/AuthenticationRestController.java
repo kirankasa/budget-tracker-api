@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kiranreddy.budgettracker.security.JwtAuthenticationRequest;
 import com.kiranreddy.budgettracker.security.JwtTokenUtil;
+import com.kiranreddy.budgettracker.security.JwtUser;
 
 @RestController
 public class AuthenticationRestController {
@@ -72,5 +74,10 @@ public class AuthenticationRestController {
 		} catch (BadCredentialsException e) {
 			throw new AuthenticationException("Bad credentials!", e);
 		}
+	}
+
+	@RequestMapping(value = "/auth/user", method = RequestMethod.GET)
+	public JwtUser getAuthenticatedUser(@AuthenticationPrincipal JwtUser user) {
+		return user;
 	}
 }

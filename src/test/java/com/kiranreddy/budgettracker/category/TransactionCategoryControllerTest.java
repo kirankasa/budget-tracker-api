@@ -12,17 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kiranreddy.budgettracker.WithMockCustomUser;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = { TransactionCategoryController.class })
-@WithMockUser
+@WithMockCustomUser
 public class TransactionCategoryControllerTest {
 
 	@Autowired
@@ -63,7 +63,6 @@ public class TransactionCategoryControllerTest {
 	}
 
 	@Test
-	@WithMockUser
 	public void saveCategoryTest() throws Exception {
 		when(transactionCategoryService.saveTransactionCategory(any()))
 				.thenReturn(new TransactionCategory(1L, "category", "type"));

@@ -33,8 +33,10 @@ public class Transaction {
 	private String note;
 
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name="category_id")
+	@JoinColumn(name = "category_id")
 	private TransactionCategory category;
+
+	private Long userId;
 
 	public Transaction() {
 	}
@@ -90,6 +92,14 @@ public class Transaction {
 
 	public TransactionCategory getCategory() {
 		return category;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public void setCategory(TransactionCategory category) {

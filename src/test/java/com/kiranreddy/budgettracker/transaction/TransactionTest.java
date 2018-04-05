@@ -35,7 +35,7 @@ public class TransactionTest {
 	}
 
 	@Test
-	@Sql(statements = { "insert into transaction_category values('1','category')" })
+	@Sql(statements = { "insert into transaction_category(id,category) values('1','category')" })
 	public void transactionMappingTest() {
 		Date date = new Date();
 		Transaction transaction = new Transaction(null, "type", 100.00, date, "note",
