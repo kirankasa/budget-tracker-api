@@ -43,7 +43,7 @@ public class UserController {
 		userService.deleteUser(id);
 	}
 
-	@PostMapping
+	@PostMapping("/register")
 	public User saveUser(@RequestBody User user) {
 		return userService.saveUser(user);
 	}
