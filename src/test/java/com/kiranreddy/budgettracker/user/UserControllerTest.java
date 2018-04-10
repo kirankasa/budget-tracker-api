@@ -88,7 +88,7 @@ public class UserControllerTest {
 		User user = new User(null, "userName", "first", "last", "email@email.com", null);
 		when(userService.saveUser(any()))
 				.thenReturn(new User(1L, "userName", "first", "last", "email@email.com", "password"));
-		mockMvc.perform(MockMvcRequestBuilders.post("/users").content(objectMapper.writeValueAsString(user))
+		mockMvc.perform(MockMvcRequestBuilders.post("/users/register").content(objectMapper.writeValueAsString(user))
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).with(csrf()))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
