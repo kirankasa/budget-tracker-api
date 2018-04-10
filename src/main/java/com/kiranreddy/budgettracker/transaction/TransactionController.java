@@ -39,14 +39,14 @@ public class TransactionController {
 
 	@PostMapping
 	public Transaction saveTransaction(@RequestBody Transaction transaction, @AuthenticationPrincipal JwtUser user) {
-		transaction.setId(user.getId());
+		transaction.setUserId(user.getId());
 		return transactionService.saveTransaction(transaction);
 	}
 
 	@PutMapping("/{id}")
 	public Transaction updateTransaction(@PathVariable("id") Long transactionId, @RequestBody Transaction transaction,
 			@AuthenticationPrincipal JwtUser user) {
-		transaction.setId(user.getId());
+		transaction.setUserId(user.getId());
 		return transactionService.updateTransaction(transactionId, transaction);
 	}
 
