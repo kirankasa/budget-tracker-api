@@ -16,8 +16,8 @@ public class TransactionService {
 		this.transactionRepository = transactionRepository;
 	}
 
-	public List<Transaction> retrieveTransactions() {
-		return transactionRepository.findAll();
+	public List<Transaction> retrieveTransactions(Long userId) {
+		return transactionRepository.findByUserId(userId);
 	}
 
 	public Transaction findTransaction(Long transactionId) {

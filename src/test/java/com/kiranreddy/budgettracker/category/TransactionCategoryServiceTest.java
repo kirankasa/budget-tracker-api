@@ -31,9 +31,9 @@ public class TransactionCategoryServiceTest {
 
 	@Test
 	public void retrieveTransactionCategoriesTest() {
-		when(transactionCategoryRepository.findAll())
+		when(transactionCategoryRepository.findByUserId(1L))
 				.thenReturn(Arrays.asList(new TransactionCategory(1L, "category", "type")));
-		List<TransactionCategory> transactionCategories = transactionCategoryService.retrieveTransactionCategories();
+		List<TransactionCategory> transactionCategories = transactionCategoryService.retrieveTransactionCategories(1L);
 		Assertions.assertThat(transactionCategories).hasSize(1);
 
 		Assertions.assertThat(transactionCategories.iterator().next().getId()).isNotNull().isPositive();

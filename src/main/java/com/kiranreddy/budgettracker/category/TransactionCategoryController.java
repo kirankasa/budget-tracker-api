@@ -27,8 +27,8 @@ public class TransactionCategoryController {
 	}
 
 	@GetMapping
-	public List<TransactionCategory> retrieveCategories() {
-		return transactionCategoryService.retrieveTransactionCategories();
+	public List<TransactionCategory> retrieveCategories(@AuthenticationPrincipal JwtUser user) {
+		return transactionCategoryService.retrieveTransactionCategories(user.getId());
 	}
 
 	@GetMapping("/{id}")

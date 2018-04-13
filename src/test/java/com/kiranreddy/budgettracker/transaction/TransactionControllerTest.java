@@ -41,7 +41,7 @@ public class TransactionControllerTest {
 
 	@Test
 	public void retrieveTransactionsTest() throws Exception {
-		when(transactionService.retrieveTransactions()).thenReturn(Arrays.asList(new Transaction(1L, "type", 100.00,
+		when(transactionService.retrieveTransactions(1L)).thenReturn(Arrays.asList(new Transaction(1L, "type", 100.00,
 				new Date(), "note", new TransactionCategory(1L, "category", "type"))));
 		mockMvc.perform(MockMvcRequestBuilders.get("/transactions")).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
