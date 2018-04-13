@@ -38,9 +38,9 @@ public class TransactionServiceTest {
 	@Test
 	public void retrieveTransactionsTest() {
 		Date date = new Date();
-		when(transactionRepository.findAll()).thenReturn(Arrays.asList(
+		when(transactionRepository.findByUserId(1L)).thenReturn(Arrays.asList(
 				new Transaction(1L, "type", 100.00, date, "note", new TransactionCategory(1L, "category", "type"))));
-		List<Transaction> transactions = transactionService.retrieveTransactions();
+		List<Transaction> transactions = transactionService.retrieveTransactions(1L);
 		Assertions.assertThat(transactions).hasSize(1);
 
 		Assertions.assertThat(transactions.iterator().next().getId()).isEqualTo(1L);
@@ -48,8 +48,7 @@ public class TransactionServiceTest {
 		Assertions.assertThat(transactions.iterator().next().getAmount()).isEqualTo(100.00);
 		Assertions.assertThat(transactions.iterator().next().getDate()).isEqualTo(date);
 		Assertions.assertThat(transactions.iterator().next().getNote()).isEqualTo("note");
-		Assertions.assertThat(transactions.iterator().next().getCategory().getCategory())
-				.isEqualTo("category");
+		Assertions.assertThat(transactions.iterator().next().getCategory().getCategory()).isEqualTo("category");
 		Assertions.assertThat(transactions.iterator().next().getCategory().getId()).isEqualTo(1L);
 	}
 
@@ -83,7 +82,6 @@ public class TransactionServiceTest {
 		verify(transactionRepository, times(1)).delete(transaction);
 	}
 
-	
 	@Test
 	public void deleteTransactionByIdTest() {
 		Date date = new Date();
@@ -94,6 +92,7 @@ public class TransactionServiceTest {
 		verify(transactionRepository, times(1)).findById(1L);
 		verify(transactionRepository, times(1)).delete(transaction);
 	}
+
 	@Test
 	public void saveTransactionTest() {
 		Date date = new Date();

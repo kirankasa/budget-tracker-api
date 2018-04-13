@@ -28,8 +28,8 @@ public class TransactionController {
 	}
 
 	@GetMapping
-	public List<Transaction> retrieveTransactions() {
-		return transactionService.retrieveTransactions();
+	public List<Transaction> retrieveTransactions(@AuthenticationPrincipal JwtUser user) {
+		return transactionService.retrieveTransactions(user.getId());
 	}
 
 	@GetMapping("/{id}")

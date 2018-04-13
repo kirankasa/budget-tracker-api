@@ -13,8 +13,8 @@ public class TransactionCategoryService {
 		this.transactionCategoryRepository = transactionCategoryRepository;
 	}
 
-	public List<TransactionCategory> retrieveTransactionCategories() {
-		return transactionCategoryRepository.findAll();
+	public List<TransactionCategory> retrieveTransactionCategories(Long userId) {
+		return transactionCategoryRepository.findByUserId(userId);
 	}
 
 	public TransactionCategory retrieveTransactionCategoryById(Long transactionCategoryId) {

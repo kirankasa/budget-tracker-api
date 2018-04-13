@@ -36,7 +36,7 @@ public class TransactionCategoryControllerTest {
 
 	@Test
 	public void retrieveCategoriesTest() throws Exception {
-		when(transactionCategoryService.retrieveTransactionCategories())
+		when(transactionCategoryService.retrieveTransactionCategories(1L))
 				.thenReturn(Arrays.asList(new TransactionCategory(1L, "category", "type")));
 		mockMvc.perform(MockMvcRequestBuilders.get("/transactions/categories"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
