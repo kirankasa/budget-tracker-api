@@ -6,24 +6,24 @@ public class JwtAuthenticationRequest implements Serializable {
 
 	private static final long serialVersionUID = -8445943548965154778L;
 
-	private String username;
+	private String userName;
 	private String password;
 
 	public JwtAuthenticationRequest() {
 		super();
 	}
 
-	public JwtAuthenticationRequest(String username, String password) {
-		this.setUsername(username);
+	public JwtAuthenticationRequest(String userName, String password) {
+		this.setUserName(userName);
 		this.setPassword(password);
 	}
 
-	public String getUsername() {
-		return this.username;
+	public String getUserName() {
+		return this.userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
