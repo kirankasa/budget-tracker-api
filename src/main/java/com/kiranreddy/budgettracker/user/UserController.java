@@ -3,6 +3,7 @@ package com.kiranreddy.budgettracker.user;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kiranreddy.budgettracker.security.JwtTokenUtil;
+
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
 
 	private UserService userService;
 
-	public UserController(UserService userService) {
+	public UserController(JwtTokenUtil jwtTokenUtil, UserDetailsService jwtUserDetailsService,
+			UserService userService) {
 		this.userService = userService;
 	}
 
@@ -39,7 +43,7 @@ public class UserController {
 		userService.deleteUser(id);
 	}
 
-	@PostMapping
+	@PostMapping("/register")
 	public User saveUser(@RequestBody User user) {
 		return userService.saveUser(user);
 	}
@@ -54,4 +58,5 @@ public class UserController {
 	public String exceptionHandler(UserNotFoundException exception) {
 		return exception.getMessage();
 	}
+
 }

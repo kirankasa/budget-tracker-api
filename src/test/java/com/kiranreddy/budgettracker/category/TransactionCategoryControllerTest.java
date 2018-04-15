@@ -2,6 +2,7 @@ package com.kiranreddy.budgettracker.category;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import java.util.Arrays;
 
@@ -17,9 +18,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kiranreddy.budgettracker.WithMockCustomUser;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = { TransactionCategoryController.class })
+@WithMockCustomUser
 public class TransactionCategoryControllerTest {
 
 	@Autowired
@@ -33,7 +36,7 @@ public class TransactionCategoryControllerTest {
 
 	@Test
 	public void retrieveCategoriesTest() throws Exception {
-		when(transactionCategoryService.retrieveTransactionCategories())
+		when(transactionCategoryService.retrieveTransactionCategories(1L))
 				.thenReturn(Arrays.asList(new TransactionCategory(1L, "category", "type")));
 		mockMvc.perform(MockMvcRequestBuilders.get("/transactions/categories"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
@@ -65,8 +68,8 @@ public class TransactionCategoryControllerTest {
 				.thenReturn(new TransactionCategory(1L, "category", "type"));
 		mockMvc.perform(MockMvcRequestBuilders.post("/transactions/categories")
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.content(objectMapper.writeValueAsString(new TransactionCategory(null, "category", "type"))))
-				.andExpect(MockMvcResultMatchers.status().isOk())
+				.content(objectMapper.writeValueAsString(new TransactionCategory(null, "category", "type")))
+				.with(csrf())).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.category").value("category"));
 	}
@@ -77,7 +80,7 @@ public class TransactionCategoryControllerTest {
 				.thenReturn(new TransactionCategory(1L, "category", "type"));
 		mockMvc.perform(MockMvcRequestBuilders.put("/transactions/categories/1")
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.content(objectMapper.writeValueAsString(new TransactionCategory(1L, "category", "type"))))
+				.content(objectMapper.writeValueAsString(new TransactionCategory(1L, "category", "type"))).with(csrf()))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.category").value("category"));
