@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class JwtUser implements UserDetails {
 
@@ -40,6 +41,7 @@ public class JwtUser implements UserDetails {
 	}
 
 	@Override
+	@JsonProperty("userName")
 	public String getUsername() {
 		return userName;
 	}
