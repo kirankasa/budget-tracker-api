@@ -24,6 +24,11 @@ public class TransactionCategory {
 		this.category = category;
 	}
 
+	public TransactionCategory(String category, Long userId) {
+		this.category = category;
+		this.userId = userId;
+	}
+
 	public Long getId() {
 		return id;
 	}

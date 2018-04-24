@@ -2,6 +2,8 @@ package com.kiranreddy.budgettracker.user;
 
 import java.util.List;
 
+import com.kiranreddy.budgettracker.category.TransactionCategory;
+import com.kiranreddy.budgettracker.category.TransactionCategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,11 +24,13 @@ import com.kiranreddy.budgettracker.security.JwtTokenUtil;
 public class UserController {
 
 	private UserService userService;
+	private TransactionCategoryService transactionCategoryService;
 
 	public UserController(JwtTokenUtil jwtTokenUtil, UserDetailsService jwtUserDetailsService,
-			UserService userService) {
+                          UserService userService, TransactionCategoryService transactionCategoryService) {
 		this.userService = userService;
-	}
+        this.transactionCategoryService = transactionCategoryService;
+    }
 
 	@GetMapping
 	public List<User> retrieveUsers() {
@@ -45,7 +49,9 @@ public class UserController {
 
 	@PostMapping("/register")
 	public User saveUser(@RequestBody User user) {
-		return userService.saveUser(user);
+		User savedUser = userService.saveUser(user);
+        transactionCategoryService.saveTransactionCategory(new TransactionCategory("Other",savedUser.getId()));
+		return savedUser;
 	}
 
 	@PutMapping("/{id}")
