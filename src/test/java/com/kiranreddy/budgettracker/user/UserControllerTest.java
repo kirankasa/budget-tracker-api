@@ -8,6 +8,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 import java.util.Arrays;
 
+import com.kiranreddy.budgettracker.category.TransactionCategoryService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class UserControllerTest {
 
 	@MockBean
 	private UserService userService;
+
+	@MockBean
+	private TransactionCategoryService transactionCategoryService;
 
 	@MockBean
 	private UserDetailsService jwtUserDetailsService;
@@ -97,6 +101,8 @@ public class UserControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("last"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email@email.com"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.password").doesNotExist());
+
+		verify(transactionCategoryService, times(1)).saveTransactionCategory(any());
 	}
 
 	@Test
