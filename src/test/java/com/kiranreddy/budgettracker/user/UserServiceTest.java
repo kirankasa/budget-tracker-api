@@ -1,13 +1,5 @@
 package com.kiranreddy.budgettracker.user;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,6 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { UserService.class })
@@ -90,6 +88,13 @@ public class UserServiceTest {
 		Assertions.assertThat(user.getLastName()).isEqualTo("last");
 		Assertions.assertThat(user.getEmail()).isEqualTo("email@email.com");
 		Assertions.assertThat(user.getPassword()).isEqualTo("password");
+	}
+
+	@Test
+	public void updateInvalidUserTest() {
+		when(userRepository.findById(1L)).thenReturn(Optional.empty());
+		thrown.expect(UserNotFoundException.class);
+		userService.updateUser(1L, null);
 	}
 
 	@Test

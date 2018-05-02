@@ -12,10 +12,13 @@ public class FeedbackService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FeedbackService.class);
 
-    public FeedbackService() {
+    private SendGrid sendGrid;
+
+    public FeedbackService(SendGrid sendGrid) {
+        this.sendGrid = sendGrid;
     }
 
-    public void sendMail(Feedback feedback) {
+    public int sendMail(Feedback feedback) {
         String fromMail = feedback.getFromEmail() != null ? feedback.getFromEmail() : "kiranreddy2004@gmail.com";
         Email from = new Email(fromMail);
         String subject = "Expense tracker feedback";
@@ -23,16 +26,17 @@ public class FeedbackService {
         Content content = new Content("text/plain", feedback.getMessage());
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
         Request request = new Request();
         request.setMethod(Method.POST);
         request.setEndpoint("mail/send");
         try {
             request.setBody(mail.build());
-            Response response = sg.api(request);
-            LOGGER.info("Sendgrid  response status {}", response.getStatusCode());
+            Response response = sendGrid.api(request);
+            LOGGER.info("SendGrid  response status {}", response.getStatusCode());
+            return response.getStatusCode();
         } catch (IOException e) {
             LOGGER.error("Exception occurred while sending mail ", e);
+            throw new RuntimeException("Exception occurred while sending email");
         }
 
     }

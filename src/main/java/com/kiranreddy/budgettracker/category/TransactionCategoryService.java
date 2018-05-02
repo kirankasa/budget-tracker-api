@@ -1,8 +1,8 @@
 package com.kiranreddy.budgettracker.category;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TransactionCategoryService {

@@ -1,7 +1,8 @@
 package com.kiranreddy.budgettracker.auth;
 
-import java.util.Objects;
-
+import com.kiranreddy.budgettracker.security.JwtAuthenticationRequest;
+import com.kiranreddy.budgettracker.security.JwtTokenUtil;
+import com.kiranreddy.budgettracker.security.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,15 +15,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.kiranreddy.budgettracker.security.JwtAuthenticationRequest;
-import com.kiranreddy.budgettracker.security.JwtTokenUtil;
-import com.kiranreddy.budgettracker.security.JwtUser;
+import java.util.Objects;
 
 @RestController
 public class AuthenticationRestController {

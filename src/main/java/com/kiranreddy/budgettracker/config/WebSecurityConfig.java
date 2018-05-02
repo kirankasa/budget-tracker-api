@@ -1,5 +1,9 @@
 package com.kiranreddy.budgettracker.config;
 
+import com.kiranreddy.budgettracker.security.JwtAuthenticationEntryPoint;
+import com.kiranreddy.budgettracker.security.JwtAuthorizationTokenFilter;
+import com.kiranreddy.budgettracker.security.JwtTokenUtil;
+import com.kiranreddy.budgettracker.security.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,11 +17,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.kiranreddy.budgettracker.security.JwtAuthenticationEntryPoint;
-import com.kiranreddy.budgettracker.security.JwtAuthorizationTokenFilter;
-import com.kiranreddy.budgettracker.security.JwtTokenUtil;
-import com.kiranreddy.budgettracker.security.JwtUserDetailsService;
 
 @Configuration
 @EnableWebSecurity

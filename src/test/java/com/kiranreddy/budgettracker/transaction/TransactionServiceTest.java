@@ -1,14 +1,7 @@
 package com.kiranreddy.budgettracker.transaction;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
+import com.kiranreddy.budgettracker.category.TransactionCategory;
+import com.kiranreddy.budgettracker.user.UserNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,8 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.kiranreddy.budgettracker.category.TransactionCategory;
-import com.kiranreddy.budgettracker.user.UserNotFoundException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { TransactionService.class })

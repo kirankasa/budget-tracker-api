@@ -1,12 +1,11 @@
 package com.kiranreddy.budgettracker.security;
 
-import java.util.Collection;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Collection;
 
 public class JwtUser implements UserDetails {
 
