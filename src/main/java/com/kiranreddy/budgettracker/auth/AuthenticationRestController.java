@@ -22,9 +22,6 @@ import java.util.Objects;
 @RestController
 public class AuthenticationRestController {
 
-	@Value("${jwt.header}")
-	private String tokenHeader;
-
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -36,7 +33,7 @@ public class AuthenticationRestController {
 	private UserDetailsService userDetailsService;
 
 	@RequestMapping(value = "${jwt.route.authentication.path}", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest)
+	public ResponseEntity<JwtAuthenticationResponse> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest)
 			throws AuthenticationException {
 
 		authenticate(authenticationRequest.getUserName(), authenticationRequest.getPassword());

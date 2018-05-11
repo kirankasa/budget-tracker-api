@@ -20,8 +20,11 @@ public class JwtTokenUtil implements Serializable {
 	static final String CLAIM_KEY_CREATED = "iat";
 	private static final long serialVersionUID = -3301605591108950415L;
 
-	@Value("${jwt.secret}")
 	private String secret;
+
+	public JwtTokenUtil(@Value("${jwt.secret}")String secret) {
+		this.secret = secret;
+	}
 
 	public String getUsernameFromToken(String token) {
 		return getClaimFromToken(token, Claims::getSubject);
@@ -31,7 +34,7 @@ public class JwtTokenUtil implements Serializable {
 		return getClaimFromToken(token, Claims::getIssuedAt);
 	}
 
-	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+	private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = getAllClaimsFromToken(token);
 		return claimsResolver.apply(claims);
 	}
