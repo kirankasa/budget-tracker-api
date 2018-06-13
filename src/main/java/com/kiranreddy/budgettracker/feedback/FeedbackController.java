@@ -1,5 +1,7 @@
 package com.kiranreddy.budgettracker.feedback;
 
+import com.kiranreddy.budgettracker.security.JwtUser;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +18,8 @@ public class FeedbackController {
     }
 
     @PostMapping
-    public String feedback(@RequestBody Feedback feedback){
-        feedbackService.sendMail(feedback);
+    public String feedback(@AuthenticationPrincipal JwtUser user, @RequestBody Feedback feedback) {
+        feedbackService.sendMail(feedback, user.getEmail());
         return "SUCCESS";
     }
 }

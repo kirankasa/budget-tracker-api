@@ -37,26 +37,17 @@ public class FeedbackServiceTest {
         Response response = new Response();
         response.setStatusCode(200);
         Mockito.when(sendGrid.api(ArgumentMatchers.any())).thenReturn(response);
-        Feedback feedback = new Feedback("Test", "test@test.com");
-        int statusCode = feedbackService.sendMail(feedback);
+        Feedback feedback = new Feedback("Test");
+        int statusCode = feedbackService.sendMail(feedback, "test@test.com");
         Assertions.assertThat(statusCode).isEqualTo(200);
     }
 
-    @Test
-    public void sendMailWithoutFromEmail() throws IOException {
-        Response response = new Response();
-        response.setStatusCode(200);
-        Mockito.when(sendGrid.api(ArgumentMatchers.any())).thenReturn(response);
-        Feedback feedback = new Feedback("Test", null);
-        int statusCode = feedbackService.sendMail(feedback);
-        Assertions.assertThat(statusCode).isEqualTo(200);
-    }
 
     @Test
     public void sendMailError() throws IOException {
         Mockito.when(sendGrid.api(ArgumentMatchers.any())).thenThrow(new IOException());
-        Feedback feedback = new Feedback("Test", null);
+        Feedback feedback = new Feedback("Test");
         thrown.expect(RuntimeException.class);
-        feedbackService.sendMail(feedback);
+        feedbackService.sendMail(feedback, "test@test.com");
     }
 }

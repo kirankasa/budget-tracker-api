@@ -18,9 +18,8 @@ public class FeedbackService {
         this.sendGrid = sendGrid;
     }
 
-    public int sendMail(Feedback feedback) {
-        String fromMail = feedback.getFromEmail() != null ? feedback.getFromEmail() : "kiranreddy2004@gmail.com";
-        Email from = new Email(fromMail);
+    public int sendMail(Feedback feedback, String fromEmail) {
+        Email from = new Email(fromEmail);
         String subject = "Expense tracker feedback";
         Email to = new Email("kiranreddy2004@gmail.com");
         Content content = new Content("text/plain", feedback.getMessage());
