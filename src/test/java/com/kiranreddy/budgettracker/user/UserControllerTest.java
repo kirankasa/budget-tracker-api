@@ -48,10 +48,10 @@ public class UserControllerTest {
 	@Test
 	public void retrieveUsersTest() throws Exception {
 		when(userService.retrieveUsers())
-				.thenReturn(Arrays.asList(new User(1L, "userName", "first", "last", "email@email.com", "password")));
+				.thenReturn(Arrays.asList(new User("id", "userName", "first", "last", "email@email.com", "password")));
 		mockMvc.perform(MockMvcRequestBuilders.get("/users")).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].id").value("id"))
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].firstName").value("first"))
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].lastName").value("last"))
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].email").value("email@email.com"))
@@ -60,11 +60,11 @@ public class UserControllerTest {
 
 	@Test
 	public void findUserTest() throws Exception {
-		when(userService.findUser(1L))
-				.thenReturn(new User(1L, "userName", "first", "last", "email@email.com", "password"));
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/1")).andExpect(MockMvcResultMatchers.status().isOk())
+		when(userService.findUser("id"))
+				.thenReturn(new User("id", "userName", "first", "last", "email@email.com", "password"));
+		mockMvc.perform(MockMvcRequestBuilders.get("/users/id")).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value("id"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("first"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("last"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email@email.com"))
@@ -73,27 +73,27 @@ public class UserControllerTest {
 
 	@Test
 	public void findInvalidUserTest() throws Exception {
-		when(userService.findUser(1L)).thenThrow(new UserNotFoundException("User not found"));
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/1")).andExpect(MockMvcResultMatchers.status().isNotFound());
+		when(userService.findUser("id")).thenThrow(new UserNotFoundException("User not found"));
+		mockMvc.perform(MockMvcRequestBuilders.get("/users/id")).andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
 	@Test
 	public void deleteUserTest() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.delete("/users/1").with(csrf()))
+		mockMvc.perform(MockMvcRequestBuilders.delete("/users/id").with(csrf()))
 				.andExpect(MockMvcResultMatchers.status().isOk());
-		verify(userService, times(1)).deleteUser(1L);
+		verify(userService, times(1)).deleteUser("id");
 	}
 
 	@Test
 	public void saveUserTest() throws Exception {
 		User user = new User(null, "userName", "first", "last", "email@email.com", null);
 		when(userService.saveUser(any()))
-				.thenReturn(new User(1L, "userName", "first", "last", "email@email.com", "password"));
+				.thenReturn(new User("id", "userName", "first", "last", "email@email.com", "password"));
 		mockMvc.perform(MockMvcRequestBuilders.post("/users/register").content(objectMapper.writeValueAsString(user))
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).with(csrf()))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value("id"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("first"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("last"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email@email.com"))
@@ -104,14 +104,14 @@ public class UserControllerTest {
 
 	@Test
 	public void updateUserTest() throws Exception {
-		User user = new User(1L, "userName", "first", "last", "email@email.com", null);
+		User user = new User("id", "userName", "first", "last", "email@email.com", null);
 		when(userService.updateUser(any(), any()))
-				.thenReturn(new User(1L, "userName", "first", "last", "email@email.com", "password"));
-		mockMvc.perform(MockMvcRequestBuilders.put("/users/1").content(objectMapper.writeValueAsString(user))
+				.thenReturn(new User("id", "userName", "first", "last", "email@email.com", "password"));
+		mockMvc.perform(MockMvcRequestBuilders.put("/users/id").content(objectMapper.writeValueAsString(user))
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).with(csrf()))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value("id"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("first"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("last"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email@email.com"))

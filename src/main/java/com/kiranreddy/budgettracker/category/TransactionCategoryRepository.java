@@ -1,11 +1,11 @@
 package com.kiranreddy.budgettracker.category;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface TransactionCategoryRepository extends JpaRepository<TransactionCategory, Long> {
+public interface TransactionCategoryRepository extends MongoRepository<TransactionCategory, String> {
 
-	List<TransactionCategory> findByUserId(Long userId);
+	List<TransactionCategory> findByUserId(String userId);
 
 }

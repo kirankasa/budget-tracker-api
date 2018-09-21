@@ -23,7 +23,7 @@ public class TransactionCategoryController {
 	}
 
 	@GetMapping("/{id}")
-	public TransactionCategory retrieveTransactionCategoryById(@PathVariable("id") Long id) {
+	public TransactionCategory retrieveTransactionCategoryById(@PathVariable("id") String id) {
 		return transactionCategoryService.retrieveTransactionCategoryById(id);
 	}
 
@@ -35,7 +35,7 @@ public class TransactionCategoryController {
 	}
 
 	@PutMapping("/{id}")
-	public TransactionCategory saveTransactionCategory(@PathVariable("id") Long id,
+	public TransactionCategory saveTransactionCategory(@PathVariable("id") String id,
 			@RequestBody TransactionCategory transactionCategory, @AuthenticationPrincipal JwtUser user) {
 		transactionCategory.setUserId(user.getId());
 		return transactionCategoryService.updateTransactionCategory(transactionCategory, id);

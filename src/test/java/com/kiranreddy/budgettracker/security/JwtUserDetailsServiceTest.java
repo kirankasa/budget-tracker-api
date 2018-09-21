@@ -33,12 +33,12 @@ public class JwtUserDetailsServiceTest {
 
     @Test
     public void loadUserByUsername() {
-        when(userRepository.findByUserName("kiran")).thenReturn(new User(1L, "kiran",
+        when(userRepository.findByUserName("kiran")).thenReturn(new User("id", "kiran",
                 "Kiran", "Reddy", "kiran@email.com", "123456"));
         UserDetails userDetails = jwtUserDetailsService.loadUserByUsername("kiran");
         Assertions.assertThat(userDetails).isNotNull();
         JwtUser user = (JwtUser) userDetails;
-        Assertions.assertThat(user.getId()).isEqualTo(1L);
+        Assertions.assertThat(user.getId()).isEqualTo("id");
         Assertions.assertThat(user.getUsername()).isEqualTo("kiran");
         Assertions.assertThat(user.getFirstName()).isEqualTo("Kiran");
         Assertions.assertThat(user.getLastName()).isEqualTo("Reddy");

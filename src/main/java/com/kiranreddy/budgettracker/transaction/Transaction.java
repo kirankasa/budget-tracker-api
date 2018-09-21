@@ -1,38 +1,34 @@
 package com.kiranreddy.budgettracker.transaction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kiranreddy.budgettracker.category.TransactionCategory;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Document(collection = "transaction")
 public class Transaction {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private String id;
 
 	private String type;
 
 	private Double amount;
 
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
 	private String note;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "category_id")
-	private TransactionCategory category;
+	private String category;
 
-	private Long userId;
+	private String userId;
 
 	public Transaction() {
 	}
 
-	public Transaction(Long id, String type, Double amount, Date date, String note, TransactionCategory category) {
+	public Transaction(String id, String type, Double amount, Date date, String note, String category) {
 		this.id = id;
 		this.type = type;
 		this.amount = amount;
@@ -41,11 +37,11 @@ public class Transaction {
 		this.category = category;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -81,19 +77,19 @@ public class Transaction {
 		this.note = note;
 	}
 
-	public TransactionCategory getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public void setCategory(TransactionCategory category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 

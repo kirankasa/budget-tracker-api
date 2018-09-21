@@ -2,18 +2,16 @@ package com.kiranreddy.budgettracker.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-@Entity
+
+@Document(collection = "user")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private String id;
 
 	private String userName;
 
@@ -29,7 +27,7 @@ public class User {
 	public User() {
 	}
 
-	public User(Long id, String userName, String firstName, String lastName, String email, String password) {
+	public User(String id, String userName, String firstName, String lastName, String email, String password) {
 		this.id = id;
 		this.userName = userName;
 		this.firstName = firstName;
@@ -38,11 +36,11 @@ public class User {
 		this.password = password;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

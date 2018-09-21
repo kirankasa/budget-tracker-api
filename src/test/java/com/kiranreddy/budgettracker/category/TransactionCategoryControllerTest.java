@@ -35,53 +35,53 @@ public class TransactionCategoryControllerTest {
 
 	@Test
 	public void retrieveCategoriesTest() throws Exception {
-		when(transactionCategoryService.retrieveTransactionCategories(1L))
-				.thenReturn(Arrays.asList(new TransactionCategory(1L, "category", "type")));
+		when(transactionCategoryService.retrieveTransactionCategories("id"))
+				.thenReturn(Arrays.asList(new TransactionCategory("id", "category")));
 		mockMvc.perform(MockMvcRequestBuilders.get("/transactions/categories"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].id").value("id"))
 				.andExpect(MockMvcResultMatchers.jsonPath("@.[0].category").value("category"));
 	}
 
 	@Test
 	public void retrieveValidCategoryTest() throws Exception {
-		when(transactionCategoryService.retrieveTransactionCategoryById(1L))
-				.thenReturn(new TransactionCategory(1L, "category", "type"));
-		mockMvc.perform(MockMvcRequestBuilders.get("/transactions/categories/1"))
+		when(transactionCategoryService.retrieveTransactionCategoryById("id"))
+				.thenReturn(new TransactionCategory("id", "category"));
+		mockMvc.perform(MockMvcRequestBuilders.get("/transactions/categories/id"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value("id"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.category").value("category"));
 	}
 
 	@Test
 	public void retrieveInValidCategoryTest() throws Exception {
-		when(transactionCategoryService.retrieveTransactionCategoryById(1L))
+		when(transactionCategoryService.retrieveTransactionCategoryById("id"))
 				.thenThrow(new TransactionCategoryNotFoundException("Transaction category not found"));
-		mockMvc.perform(MockMvcRequestBuilders.get("/transactions/categories/1"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/transactions/categories/id"))
 				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
 	@Test
 	public void saveCategoryTest() throws Exception {
 		when(transactionCategoryService.saveTransactionCategory(any()))
-				.thenReturn(new TransactionCategory(1L, "category", "type"));
+				.thenReturn(new TransactionCategory("id", "category"));
 		mockMvc.perform(MockMvcRequestBuilders.post("/transactions/categories")
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.content(objectMapper.writeValueAsString(new TransactionCategory(null, "category", "type")))
+				.content(objectMapper.writeValueAsString(new TransactionCategory(null, "category")))
 				.with(csrf())).andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value("id"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.category").value("category"));
 	}
 
 	@Test
 	public void updateCategoryTest() throws Exception {
 		when(transactionCategoryService.updateTransactionCategory(any(), any()))
-				.thenReturn(new TransactionCategory(1L, "category", "type"));
-		mockMvc.perform(MockMvcRequestBuilders.put("/transactions/categories/1")
+				.thenReturn(new TransactionCategory("id", "category"));
+		mockMvc.perform(MockMvcRequestBuilders.put("/transactions/categories/id")
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.content(objectMapper.writeValueAsString(new TransactionCategory(1L, "category", "type"))).with(csrf()))
+				.content(objectMapper.writeValueAsString(new TransactionCategory("id", "category"))).with(csrf()))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value("id"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.category").value("category"));
 	}
 }

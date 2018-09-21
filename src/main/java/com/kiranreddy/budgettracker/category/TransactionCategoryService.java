@@ -13,11 +13,11 @@ public class TransactionCategoryService {
 		this.transactionCategoryRepository = transactionCategoryRepository;
 	}
 
-	public List<TransactionCategory> retrieveTransactionCategories(Long userId) {
+	public List<TransactionCategory> retrieveTransactionCategories(String userId) {
 		return transactionCategoryRepository.findByUserId(userId);
 	}
 
-	public TransactionCategory retrieveTransactionCategoryById(Long transactionCategoryId) {
+	public TransactionCategory retrieveTransactionCategoryById(String transactionCategoryId) {
 		return transactionCategoryRepository.findById(transactionCategoryId)
 				.orElseThrow(() -> new TransactionCategoryNotFoundException(
 						"Transaction Category Not found with id " + transactionCategoryId));
@@ -28,7 +28,7 @@ public class TransactionCategoryService {
 	}
 
 	public TransactionCategory updateTransactionCategory(TransactionCategory transactionCategoryInput,
-			Long transactionCategoryId) {
+			String transactionCategoryId) {
 		retrieveTransactionCategoryById(transactionCategoryId);
 		return saveTransactionCategory(transactionCategoryInput);
 	}

@@ -36,7 +36,7 @@ public class JwtTokenUtilTest {
 
     @Test
     public void generateToken() {
-        JwtUser principal = new JwtUser(1L, "kiran",
+        JwtUser principal = new JwtUser("id", "kiran",
                 "kiran", "reddy", "kiran@email.com", "", null, true);
         String token = jwtTokenUtil.generateToken(principal);
         Assertions.assertThat(token).isNotBlank();
@@ -44,7 +44,7 @@ public class JwtTokenUtilTest {
 
     @Test
     public void validateToken() {
-        JwtUser principal = new JwtUser(1L, "kiran",
+        JwtUser principal = new JwtUser("id", "kiran",
                 "kiran", "reddy", "kiran@email.com", "", null, true);
         String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraXJhbiIsImlhdCI6MTUyNTM2NTAxMn0." +
                 "A41zPbqVo7dCifB53nw3VTJjEAkTtaNByWJ6J-1cllRq08IHpUOHiqSr5WNm5dBHQT7y8tg9ipjuMUPFrw4JbQ";

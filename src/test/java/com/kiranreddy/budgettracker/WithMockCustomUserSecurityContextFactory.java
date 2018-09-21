@@ -11,7 +11,7 @@ public class WithMockCustomUserSecurityContextFactory implements WithSecurityCon
 	@Override
 	public SecurityContext createSecurityContext(WithMockCustomUser customUser) {
 		SecurityContext context = SecurityContextHolder.createEmptyContext();
-		JwtUser principal = new JwtUser(1L, "kiran", "kiran",
+		JwtUser principal = new JwtUser("id", "kiran", "kiran",
 				"reddy", "kiran@email.com", "", null, true);
 
 		Authentication auth = new UsernamePasswordAuthenticationToken(principal, "password",

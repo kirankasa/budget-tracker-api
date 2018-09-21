@@ -10,9 +10,9 @@ public class JwtUserFactoryTest {
 
     @Test
     public void create() {
-        JwtUser user = JwtUserFactory.create(new User(1L, "kiran", "Kiran",
+        JwtUser user = JwtUserFactory.create(new User("id", "kiran", "Kiran",
                 "Reddy", "kiran@email.com", "123456"));
-        Assertions.assertThat(user.getId()).isEqualTo(1L);
+        Assertions.assertThat(user.getId()).isEqualTo("id");
         Assertions.assertThat(user.getUsername()).isEqualTo("kiran");
         Assertions.assertThat(user.getFirstName()).isEqualTo("Kiran");
         Assertions.assertThat(user.getLastName()).isEqualTo("Reddy");

@@ -15,11 +15,11 @@ public class TransactionService {
 		this.transactionRepository = transactionRepository;
 	}
 
-	public List<Transaction> retrieveTransactions(Long userId) {
+	public List<Transaction> retrieveTransactions(String userId) {
 		return transactionRepository.findByUserId(userId);
 	}
 
-	public Transaction findTransaction(Long transactionId) {
+	public Transaction findTransaction(String transactionId) {
 		Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
 		Transaction transaction = optionalTransaction
 				.orElseThrow(() -> new UserNotFoundException("No Transaction found with  id " + transactionId));
@@ -30,7 +30,7 @@ public class TransactionService {
 		transactionRepository.delete(transaction);
 	}
 
-	public void deleteTransaction(Long transactionId) {
+	public void deleteTransaction(String transactionId) {
 		Transaction transaction = findTransaction(transactionId);
 		deleteTransaction(transaction);
 	}
@@ -39,7 +39,7 @@ public class TransactionService {
 		return transactionRepository.save(transaction);
 	}
 
-	public Transaction updateTransaction(Long transactionId, Transaction transactionInput) {
+	public Transaction updateTransaction(String transactionId, Transaction transactionInput) {
 		findTransaction(transactionId);
 		return transactionRepository.save(transactionInput);
 	}

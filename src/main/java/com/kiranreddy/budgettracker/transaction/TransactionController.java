@@ -23,7 +23,7 @@ public class TransactionController {
 	}
 
 	@GetMapping("/{id}")
-	public Transaction retrieveTransaction(@PathVariable("id") Long transactionId) {
+	public Transaction retrieveTransaction(@PathVariable("id") String transactionId) {
 		return transactionService.findTransaction(transactionId);
 	}
 
@@ -34,14 +34,14 @@ public class TransactionController {
 	}
 
 	@PutMapping("/{id}")
-	public Transaction updateTransaction(@PathVariable("id") Long transactionId, @RequestBody Transaction transaction,
+	public Transaction updateTransaction(@PathVariable("id") String transactionId, @RequestBody Transaction transaction,
 			@AuthenticationPrincipal JwtUser user) {
 		transaction.setUserId(user.getId());
 		return transactionService.updateTransaction(transactionId, transaction);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteTransaction(@PathVariable("id") Long transactionId) {
+	public void deleteTransaction(@PathVariable("id") String transactionId) {
 		transactionService.deleteTransaction(transactionId);
 	}
 

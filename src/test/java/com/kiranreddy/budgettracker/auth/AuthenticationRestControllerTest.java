@@ -52,7 +52,7 @@ public class AuthenticationRestControllerTest {
 
     @Test
     public void createAuthenticationToken() throws Exception {
-        JwtUser principal = new JwtUser(1L, "kiran",
+        JwtUser principal = new JwtUser("id", "kiran",
                 "kiran", "reddy", "kiran@email.com", "", null, true);
         String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraXJhbiIsImlhdCI6MTUyNTM2NTAxMn0." +
                 "A41zPbqVo7dCifB53nw3VTJjEAkTtaNByWJ6J-1cllRq08IHpUOHiqSr5WNm5dBHQT7y8tg9ipjuMUPFrw4JbQ";

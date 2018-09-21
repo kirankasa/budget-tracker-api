@@ -31,52 +31,52 @@ public class TransactionCategoryServiceTest {
 
 	@Test
 	public void retrieveTransactionCategoriesTest() {
-		when(transactionCategoryRepository.findByUserId(1L))
-				.thenReturn(Arrays.asList(new TransactionCategory(1L, "category", "type")));
-		List<TransactionCategory> transactionCategories = transactionCategoryService.retrieveTransactionCategories(1L);
+		when(transactionCategoryRepository.findByUserId("id"))
+				.thenReturn(Arrays.asList(new TransactionCategory("id", "category")));
+		List<TransactionCategory> transactionCategories = transactionCategoryService.retrieveTransactionCategories("id");
 		Assertions.assertThat(transactionCategories).hasSize(1);
 
-		Assertions.assertThat(transactionCategories.iterator().next().getId()).isNotNull().isPositive();
+		Assertions.assertThat(transactionCategories.iterator().next().getId()).isNotNull();
 		Assertions.assertThat(transactionCategories.iterator().next().getCategory()).isEqualTo("category");
 	}
 
 	@Test
 	public void retrieveValidTransactionCategoryTest() {
-		when(transactionCategoryRepository.findById(1L))
-				.thenReturn(Optional.of(new TransactionCategory(1L, "category", "type")));
-		TransactionCategory transactionCategory = transactionCategoryService.retrieveTransactionCategoryById(1L);
+		when(transactionCategoryRepository.findById("id"))
+				.thenReturn(Optional.of(new TransactionCategory("id", "category")));
+		TransactionCategory transactionCategory = transactionCategoryService.retrieveTransactionCategoryById("id");
 
-		Assertions.assertThat(transactionCategory.getId()).isNotNull().isPositive();
+		Assertions.assertThat(transactionCategory.getId()).isNotNull();
 		Assertions.assertThat(transactionCategory.getCategory()).isEqualTo("category");
 	}
 
 	@Test
 	public void retrieveInValidTransactionCategoryTest() {
-		when(transactionCategoryRepository.findById(1L)).thenReturn(Optional.empty());
+		when(transactionCategoryRepository.findById("id")).thenReturn(Optional.empty());
 		thrown.expect(TransactionCategoryNotFoundException.class);
-		transactionCategoryService.retrieveTransactionCategoryById(1L);
+		transactionCategoryService.retrieveTransactionCategoryById("id");
 	}
 
 	@Test
 	public void saveCategoryTest() {
-		TransactionCategory transactionCategoryInput = new TransactionCategory(null, "category", "type");
+		TransactionCategory transactionCategoryInput = new TransactionCategory(null, "category");
 		when(transactionCategoryRepository.save(transactionCategoryInput))
-				.thenReturn(new TransactionCategory(1L, "category", "type"));
+				.thenReturn(new TransactionCategory("id", "category"));
 		TransactionCategory transactionCategory = transactionCategoryService
 				.saveTransactionCategory(transactionCategoryInput);
-		Assertions.assertThat(transactionCategory.getId()).isNotNull().isPositive();
+		Assertions.assertThat(transactionCategory.getId()).isNotNull();
 		Assertions.assertThat(transactionCategory.getCategory()).isEqualTo("category");
 	}
 
 	@Test
 	public void updateCategoryTest() {
-		TransactionCategory transactionCategoryInput = new TransactionCategory(1L, "categoryupdate", "type");
-		when(transactionCategoryRepository.findById(1L)).thenReturn(Optional.of(transactionCategoryInput));
+		TransactionCategory transactionCategoryInput = new TransactionCategory("id", "categoryupdate");
+		when(transactionCategoryRepository.findById("id")).thenReturn(Optional.of(transactionCategoryInput));
 		when(transactionCategoryRepository.save(transactionCategoryInput))
-				.thenReturn(new TransactionCategory(1L, "categoryupdate", "type"));
+				.thenReturn(new TransactionCategory("id", "categoryupdate"));
 		TransactionCategory transactionCategory = transactionCategoryService
-				.updateTransactionCategory(transactionCategoryInput, 1L);
-		Assertions.assertThat(transactionCategory.getId()).isNotNull().isPositive();
+				.updateTransactionCategory(transactionCategoryInput, "id");
+		Assertions.assertThat(transactionCategory.getId()).isNotNull();
 		Assertions.assertThat(transactionCategory.getCategory()).isEqualTo("categoryupdate");
 	}
 

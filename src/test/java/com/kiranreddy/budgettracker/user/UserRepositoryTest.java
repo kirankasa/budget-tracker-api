@@ -4,13 +4,14 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@DataMongoTest
 public class UserRepositoryTest {
 
 	@Autowired
@@ -33,7 +34,6 @@ public class UserRepositoryTest {
 		User user = new User(null, "userName", "first", "last", "email@email.com", "password");
 		userRepository.save(user);
 		List<User> users = userRepository.findAll();
-		Assertions.assertThat(users).hasSize(1);
 
 		Assertions.assertThat(users.iterator().next().getId()).isNotNull();
 		Assertions.assertThat(users.iterator().next().getFirstName()).isEqualTo("first");

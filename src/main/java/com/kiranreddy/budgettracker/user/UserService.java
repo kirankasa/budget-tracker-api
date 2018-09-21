@@ -26,7 +26,7 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	public User updateUser(Long id, User inputUser) {
+	public User updateUser(String id, User inputUser) {
 		Optional<User> optionalUser = userRepository.findById(id);
 		User user = optionalUser.orElseThrow(() -> new UserNotFoundException("No User found with user id " + id));
 		user.setFirstName(inputUser.getFirstName());
@@ -39,12 +39,12 @@ public class UserService {
 		userRepository.delete(user);
 	}
 
-	public void deleteUser(Long id) {
+	public void deleteUser(String id) {
 		User user = findUser(id);
 		deleteUser(user);
 	}
 
-	public User findUser(Long id) {
+	public User findUser(String id) {
 		Optional<User> user = userRepository.findById(id);
 		return user.orElseThrow(() -> new UserNotFoundException("No User found with user id " + id));
 	}

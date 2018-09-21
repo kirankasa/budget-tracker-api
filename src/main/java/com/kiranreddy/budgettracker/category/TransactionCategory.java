@@ -1,39 +1,31 @@
 package com.kiranreddy.budgettracker.category;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document(collection = "transaction_category")
 public class TransactionCategory {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private String id;
 
 	private String category;
 
-	private Long userId;
+	private String userId;
 
 	public TransactionCategory() {
 	}
 
-	public TransactionCategory(Long id, String category, String type) {
+	public TransactionCategory(String id, String category) {
 		this.id = id;
 		this.category = category;
 	}
 
-	public TransactionCategory(String category, Long userId) {
-		this.category = category;
-		this.userId = userId;
-	}
-
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -45,11 +37,11 @@ public class TransactionCategory {
 		this.category = category;
 	}
 
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
