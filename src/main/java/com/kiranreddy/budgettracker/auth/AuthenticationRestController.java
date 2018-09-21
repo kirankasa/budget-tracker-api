@@ -16,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Objects;
 
@@ -69,7 +70,7 @@ public class AuthenticationRestController {
 	}
 
 	@RequestMapping(value = "/auth/user", method = RequestMethod.GET)
-	public JwtUser getAuthenticatedUser(@AuthenticationPrincipal JwtUser user) {
+	public JwtUser getAuthenticatedUser(@ApiIgnore @AuthenticationPrincipal JwtUser user) {
 		return user;
 	}
 }

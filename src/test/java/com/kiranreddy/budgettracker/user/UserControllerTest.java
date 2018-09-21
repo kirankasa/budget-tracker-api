@@ -33,12 +33,6 @@ public class UserControllerTest {
 	@MockBean
 	private TransactionCategoryService transactionCategoryService;
 
-	@MockBean
-	private UserDetailsService jwtUserDetailsService;
-
-	@MockBean
-	private JwtTokenUtil jwtTokenUtil;
-
 	@Autowired
 	private MockMvc mockMvc;
 

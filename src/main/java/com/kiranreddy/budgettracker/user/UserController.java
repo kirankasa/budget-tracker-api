@@ -16,8 +16,7 @@ public class UserController {
 	private UserService userService;
 	private TransactionCategoryService transactionCategoryService;
 
-	public UserController(JwtTokenUtil jwtTokenUtil, UserDetailsService jwtUserDetailsService,
-                          UserService userService, TransactionCategoryService transactionCategoryService) {
+	public UserController(UserService userService, TransactionCategoryService transactionCategoryService) {
 		this.userService = userService;
         this.transactionCategoryService = transactionCategoryService;
     }

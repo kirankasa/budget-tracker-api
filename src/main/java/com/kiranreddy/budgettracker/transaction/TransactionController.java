@@ -4,6 +4,7 @@ import com.kiranreddy.budgettracker.security.JwtUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class TransactionController {
 	}
 
 	@GetMapping
-	public List<Transaction> retrieveTransactions(@AuthenticationPrincipal JwtUser user) {
+	public List<Transaction> retrieveTransactions(@ApiIgnore @AuthenticationPrincipal JwtUser user) {
 		return transactionService.retrieveTransactions(user.getId());
 	}
 
@@ -28,7 +29,7 @@ public class TransactionController {
 	}
 
 	@PostMapping
-	public Transaction saveTransaction(@RequestBody Transaction transaction, @AuthenticationPrincipal JwtUser user) {
+	public Transaction saveTransaction(@RequestBody Transaction transaction, @ApiIgnore @AuthenticationPrincipal JwtUser user) {
 		transaction.setUserId(user.getId());
 		return transactionService.saveTransaction(transaction);
 	}

@@ -10,6 +10,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Collections;
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -22,7 +24,7 @@ public class SwaggerConfig {
 	private ApiInfo metaData() {
 		ApiInfo apiInfo = new ApiInfo("Budget Tracker", "REST API for budget tracker", "1.0", "Terms of service",
 				new Contact("Kiran kumar Reddy k", null, "kiranreddy2004@gmail.com"),
-				"Apache License Version 2.0", "https://www.apache.org/licenses/LICENSE-2.0");
+				"Apache License Version 2.0", "https://www.apache.org/licenses/LICENSE-2.0",Collections.emptyList());
 		return apiInfo;
 	}
 

@@ -4,6 +4,7 @@ import com.kiranreddy.budgettracker.security.JwtUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class TransactionCategoryController {
 
 	@PutMapping("/{id}")
 	public TransactionCategory saveTransactionCategory(@PathVariable("id") String id,
-			@RequestBody TransactionCategory transactionCategory, @AuthenticationPrincipal JwtUser user) {
+			@RequestBody TransactionCategory transactionCategory, @ApiIgnore @AuthenticationPrincipal JwtUser user) {
 		transactionCategory.setUserId(user.getId());
 		return transactionCategoryService.updateTransactionCategory(transactionCategory, id);
 	}
