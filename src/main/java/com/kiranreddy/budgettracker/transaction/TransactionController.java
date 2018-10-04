@@ -12,43 +12,50 @@ import java.util.List;
 @RequestMapping("/transactions")
 public class TransactionController {
 
-	private TransactionService transactionService;
+    private TransactionService transactionService;
 
-	public TransactionController(TransactionService transactionService) {
-		this.transactionService = transactionService;
-	}
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
-	@GetMapping
-	public List<Transaction> retrieveTransactions(@ApiIgnore @AuthenticationPrincipal JwtUser user) {
-		return transactionService.retrieveTransactions(user.getId());
-	}
+    @GetMapping
+    public List<Transaction> retrieveTransactions(@ApiIgnore @AuthenticationPrincipal JwtUser user) {
+        return transactionService.retrieveTransactions(user.getId());
+    }
 
-	@GetMapping("/{id}")
-	public Transaction retrieveTransaction(@PathVariable("id") String transactionId) {
-		return transactionService.findTransaction(transactionId);
-	}
+    @GetMapping("/{id}")
+    public Transaction retrieveTransaction(@PathVariable("id") String transactionId) {
+        return transactionService.findTransaction(transactionId);
+    }
 
-	@PostMapping
-	public Transaction saveTransaction(@RequestBody Transaction transaction, @ApiIgnore @AuthenticationPrincipal JwtUser user) {
-		transaction.setUserId(user.getId());
-		return transactionService.saveTransaction(transaction);
-	}
+    @PostMapping
+    public Transaction saveTransaction(@RequestBody Transaction transaction, @ApiIgnore @AuthenticationPrincipal JwtUser user) {
+        transaction.setUserId(user.getId());
+        return transactionService.saveTransaction(transaction);
+    }
 
-	@PutMapping("/{id}")
-	public Transaction updateTransaction(@PathVariable("id") String transactionId, @RequestBody Transaction transaction,
-			@AuthenticationPrincipal JwtUser user) {
-		transaction.setUserId(user.getId());
-		return transactionService.updateTransaction(transactionId, transaction);
-	}
+    @PutMapping("/{id}")
+    public Transaction updateTransaction(@PathVariable("id") String transactionId, @RequestBody Transaction transaction,
+                                         @AuthenticationPrincipal JwtUser user) {
+        transaction.setUserId(user.getId());
+        return transactionService.updateTransaction(transactionId, transaction);
+    }
 
-	@DeleteMapping("/{id}")
-	public void deleteTransaction(@PathVariable("id") String transactionId) {
-		transactionService.deleteTransaction(transactionId);
-	}
+    @DeleteMapping("/{id}")
+    public void deleteTransaction(@PathVariable("id") String transactionId) {
+        transactionService.deleteTransaction(transactionId);
+    }
 
-	@ExceptionHandler(TransactionNotFoundException.class)
-	@ResponseStatus(code = HttpStatus.NOT_FOUND)
-	public String exceptionHandler(TransactionNotFoundException exception) {
-		return exception.getMessage();
-	}
+    @ExceptionHandler(TransactionNotFoundException.class)
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    public String exceptionHandler(TransactionNotFoundException exception) {
+        return exception.getMessage();
+    }
+
+    @GetMapping("/amountPerCategory")
+    public List<AmountPerCategory> retrieveAmountPerCategory(@ApiIgnore @AuthenticationPrincipal JwtUser user,
+                                                             @RequestParam("monthAndYear") String monthAndYear,
+                                                             @RequestParam("transactionType") String transactionType) {
+        return transactionService.getAmountPerCategory(user.getId(), monthAndYear, transactionType);
+    }
 }

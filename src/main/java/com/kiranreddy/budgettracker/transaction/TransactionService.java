@@ -9,39 +9,45 @@ import java.util.Optional;
 @Service
 public class TransactionService {
 
-	private TransactionRepository transactionRepository;
+    private TransactionRepository transactionRepository;
+    private TransactionReportRepository transactionReportRepository;
 
-	public TransactionService(TransactionRepository transactionRepository) {
-		this.transactionRepository = transactionRepository;
-	}
+    public TransactionService(TransactionRepository transactionRepository, TransactionReportRepository transactionReportRepository) {
+        this.transactionRepository = transactionRepository;
+        this.transactionReportRepository = transactionReportRepository;
+    }
 
-	public List<Transaction> retrieveTransactions(String userId) {
-		return transactionRepository.findByUserId(userId);
-	}
+    public List<Transaction> retrieveTransactions(String userId) {
+        return transactionRepository.findByUserId(userId);
+    }
 
-	public Transaction findTransaction(String transactionId) {
-		Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
-		Transaction transaction = optionalTransaction
-				.orElseThrow(() -> new UserNotFoundException("No Transaction found with  id " + transactionId));
-		return transaction;
-	}
+    public Transaction findTransaction(String transactionId) {
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
+        Transaction transaction = optionalTransaction
+                .orElseThrow(() -> new UserNotFoundException("No Transaction found with  id " + transactionId));
+        return transaction;
+    }
 
-	public void deleteTransaction(Transaction transaction) {
-		transactionRepository.delete(transaction);
-	}
+    public void deleteTransaction(Transaction transaction) {
+        transactionRepository.delete(transaction);
+    }
 
-	public void deleteTransaction(String transactionId) {
-		Transaction transaction = findTransaction(transactionId);
-		deleteTransaction(transaction);
-	}
+    public void deleteTransaction(String transactionId) {
+        Transaction transaction = findTransaction(transactionId);
+        deleteTransaction(transaction);
+    }
 
-	public Transaction saveTransaction(Transaction transaction) {
-		return transactionRepository.save(transaction);
-	}
+    public Transaction saveTransaction(Transaction transaction) {
+        return transactionRepository.save(transaction);
+    }
 
-	public Transaction updateTransaction(String transactionId, Transaction transactionInput) {
-		findTransaction(transactionId);
-		return transactionRepository.save(transactionInput);
-	}
+    public Transaction updateTransaction(String transactionId, Transaction transactionInput) {
+        findTransaction(transactionId);
+        return transactionRepository.save(transactionInput);
+    }
+
+    List<AmountPerCategory> getAmountPerCategory(String userId,String monthAndYear, String transactionType){
+        return transactionReportRepository.getAmountPerCategory(userId, monthAndYear, transactionType);
+    }
 
 }
