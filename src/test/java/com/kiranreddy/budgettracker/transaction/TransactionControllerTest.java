@@ -103,7 +103,7 @@ public class TransactionControllerTest {
 	}
 
 	@Test
-	public void deletTransactionTest() throws Exception {
+	public void deleteTransactionTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete("/transactions/id").with(csrf()))
 				.andExpect(MockMvcResultMatchers.status().isOk());
 		verify(transactionService, times(1)).deleteTransaction("id");

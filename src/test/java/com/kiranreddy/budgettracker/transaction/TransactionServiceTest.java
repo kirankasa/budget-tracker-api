@@ -25,6 +25,9 @@ public class TransactionServiceTest {
 	@MockBean
 	private TransactionRepository transactionRepository;
 
+	@MockBean
+	private TransactionReportRepository transactionReportRepository;
+
 	@Autowired
 	private TransactionService transactionService;
 
