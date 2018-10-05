@@ -33,7 +33,7 @@ public class TransactionReportRepositoryImpl implements TransactionReportReposit
                 .as("userId");
 
         GroupOperation groupByCategory = group("category")
-                .sum("amount").as("amount");
+                .sum("amount").as("totalAmount");
         MatchOperation matchByMonthAndType = match(Criteria.where("monthAndYear").is(monthAndYear).and("type").is(transactionType).and("userId").is(userId));
         Aggregation aggregation = newAggregation(projectMonthAndYear, matchByMonthAndType, groupByCategory);
         AggregationResults<AmountPerCategory> amountPerCategories = mongoTemplate.aggregate(aggregation, "transaction", AmountPerCategory.class);
