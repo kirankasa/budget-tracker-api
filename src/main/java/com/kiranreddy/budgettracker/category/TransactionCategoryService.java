@@ -1,5 +1,6 @@
 package com.kiranreddy.budgettracker.category;
 
+import com.kiranreddy.budgettracker.transaction.TransactionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -7,30 +8,38 @@ import java.util.List;
 @Service
 public class TransactionCategoryService {
 
-	private TransactionCategoryRepository transactionCategoryRepository;
+    private final TransactionCategoryRepository transactionCategoryRepository;
+    private final TransactionService transactionService;
 
-	public TransactionCategoryService(TransactionCategoryRepository transactionCategoryRepository) {
-		this.transactionCategoryRepository = transactionCategoryRepository;
-	}
+    public TransactionCategoryService(TransactionCategoryRepository transactionCategoryRepository,
+                                      TransactionService transactionService) {
+        this.transactionCategoryRepository = transactionCategoryRepository;
+        this.transactionService = transactionService;
+    }
 
-	public List<TransactionCategory> retrieveTransactionCategories(String userId) {
-		return transactionCategoryRepository.findByUserId(userId);
-	}
+    public List<TransactionCategory> retrieveTransactionCategories(String userId) {
+        return transactionCategoryRepository.findByUserId(userId);
+    }
 
-	public TransactionCategory retrieveTransactionCategoryById(String transactionCategoryId) {
-		return transactionCategoryRepository.findById(transactionCategoryId)
-				.orElseThrow(() -> new TransactionCategoryNotFoundException(
-						"Transaction Category Not found with id " + transactionCategoryId));
-	}
+    public TransactionCategory retrieveTransactionCategoryById(String transactionCategoryId) {
+        return transactionCategoryRepository.findById(transactionCategoryId)
+                .orElseThrow(() -> new TransactionCategoryNotFoundException(
+                        "Transaction Category Not found with id " + transactionCategoryId));
+    }
 
-	public TransactionCategory saveTransactionCategory(TransactionCategory transactionCategory) {
-		return transactionCategoryRepository.save(transactionCategory);
-	}
+    public TransactionCategory saveTransactionCategory(TransactionCategory transactionCategory) {
+        return transactionCategoryRepository.save(transactionCategory);
+    }
 
-	public TransactionCategory updateTransactionCategory(TransactionCategory transactionCategoryInput,
-			String transactionCategoryId) {
-		retrieveTransactionCategoryById(transactionCategoryId);
-		return saveTransactionCategory(transactionCategoryInput);
-	}
+    public TransactionCategory updateTransactionCategory(TransactionCategory transactionCategoryInput,
+                                                         String transactionCategoryId) {
+        TransactionCategory existingTransactionCategory = retrieveTransactionCategoryById(transactionCategoryId);
+        transactionService.updateTransactionCategoryForAllTransactions(
+                existingTransactionCategory.getCategory(),
+                transactionCategoryInput.getCategory(),
+                transactionCategoryInput.getUserId()
+        );
+        return saveTransactionCategory(transactionCategoryInput);
+    }
 
 }

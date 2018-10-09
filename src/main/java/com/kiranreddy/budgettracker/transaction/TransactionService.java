@@ -9,12 +9,16 @@ import java.util.Optional;
 @Service
 public class TransactionService {
 
-    private TransactionRepository transactionRepository;
-    private TransactionReportRepository transactionReportRepository;
+    private final TransactionRepository transactionRepository;
+    private final TransactionReportRepository transactionReportRepository;
+    private final TransactionRepositoryCustom transactionRepositoryCustom;
 
-    public TransactionService(TransactionRepository transactionRepository, TransactionReportRepository transactionReportRepository) {
+    public TransactionService(TransactionRepository transactionRepository,
+                              TransactionReportRepository transactionReportRepository,
+                              TransactionRepositoryCustom transactionRepositoryCustom) {
         this.transactionRepository = transactionRepository;
         this.transactionReportRepository = transactionReportRepository;
+        this.transactionRepositoryCustom = transactionRepositoryCustom;
     }
 
     public List<Transaction> retrieveTransactions(String userId) {
@@ -46,8 +50,12 @@ public class TransactionService {
         return transactionRepository.save(transactionInput);
     }
 
-    List<AmountPerCategory> getAmountPerCategory(String userId,String monthAndYear, String transactionType){
+    List<AmountPerCategory> getAmountPerCategory(String userId, String monthAndYear, String transactionType) {
         return transactionReportRepository.getAmountPerCategory(userId, monthAndYear, transactionType);
+    }
+
+    public void updateTransactionCategoryForAllTransactions(String oldCategory, String newCategory, String userId) {
+        transactionRepositoryCustom.updateTransactionCategoryForAllTransactions(oldCategory,newCategory,userId);
     }
 
 }
