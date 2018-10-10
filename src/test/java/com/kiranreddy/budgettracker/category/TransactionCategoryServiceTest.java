@@ -1,5 +1,6 @@
 package com.kiranreddy.budgettracker.category;
 
+import com.kiranreddy.budgettracker.transaction.TransactionService;
 import org.assertj.core.api.Assertions;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,6 +23,9 @@ public class TransactionCategoryServiceTest {
 
 	@MockBean
 	private TransactionCategoryRepository transactionCategoryRepository;
+
+	@MockBean
+	private TransactionService transactionService;
 
 	@Autowired
 	private TransactionCategoryService transactionCategoryService;

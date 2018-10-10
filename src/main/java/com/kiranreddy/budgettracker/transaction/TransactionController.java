@@ -1,6 +1,7 @@
 package com.kiranreddy.budgettracker.transaction;
 
 import com.kiranreddy.budgettracker.security.JwtUser;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,10 @@ public class TransactionController {
     }
 
     @GetMapping
-    public List<Transaction> retrieveTransactions(@ApiIgnore @AuthenticationPrincipal JwtUser user) {
-        return transactionService.retrieveTransactions(user.getId());
+    public Page<Transaction> retrieveTransactions(@ApiIgnore @AuthenticationPrincipal JwtUser user,
+                                                  @RequestParam(value = "page", defaultValue = "0") int offset,
+                                                  @RequestParam(value = "size", defaultValue = "20") int limit) {
+        return transactionService.retrieveTransactions(user.getId(), offset, limit);
     }
 
     @GetMapping("/{id}")

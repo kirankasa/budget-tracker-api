@@ -39,7 +39,9 @@ public class UserController {
 	@PostMapping("/register")
 	public User saveUser(@RequestBody User user) {
 		User savedUser = userService.saveUser(user);
-        transactionCategoryService.saveTransactionCategory(new TransactionCategory("Other",savedUser.getId()));
+		TransactionCategory transactionCategory = new TransactionCategory(null, "Other");
+		transactionCategory.setUserId(savedUser.getId());
+		transactionCategoryService.saveTransactionCategory(transactionCategory);
 		return savedUser;
 	}
 

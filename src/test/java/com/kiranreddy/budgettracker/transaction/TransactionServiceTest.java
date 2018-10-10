@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -26,6 +28,9 @@ public class TransactionServiceTest {
 	private TransactionRepository transactionRepository;
 
 	@MockBean
+	private TransactionRepositoryCustom transactionRepositoryCustom;
+
+	@MockBean
 	private TransactionReportRepository transactionReportRepository;
 
 	@Autowired
@@ -37,9 +42,10 @@ public class TransactionServiceTest {
 	@Test
 	public void retrieveTransactionsTest() {
 		Date date = new Date();
-		when(transactionRepository.findByUserId("id")).thenReturn(Arrays.asList(
-				new Transaction("id", "type", 100.00, date, "note","category")));
-		List<Transaction> transactions = transactionService.retrieveTransactions("id");
+		when(transactionRepository.findByUserId(any(),any())).thenReturn(new PageImpl<Transaction>(Arrays.asList(
+				new Transaction("id", "type", 100.00, date, "note","category"))));
+		Page<Transaction> transactionPage = transactionService.retrieveTransactions("id",0,2);
+		List<Transaction> transactions = transactionPage.getContent();
 		Assertions.assertThat(transactions).hasSize(1);
 
 		Assertions.assertThat(transactions.iterator().next().getId()).isEqualTo("id");

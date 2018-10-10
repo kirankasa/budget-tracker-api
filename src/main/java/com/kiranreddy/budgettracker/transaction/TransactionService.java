@@ -1,6 +1,9 @@
 package com.kiranreddy.budgettracker.transaction;
 
 import com.kiranreddy.budgettracker.user.UserNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,31 +24,30 @@ public class TransactionService {
         this.transactionRepositoryCustom = transactionRepositoryCustom;
     }
 
-    public List<Transaction> retrieveTransactions(String userId) {
-        return transactionRepository.findByUserId(userId);
+    Page<Transaction> retrieveTransactions(String userId, int page, int limit) {
+        return transactionRepository.findByUserId(userId, PageRequest.of(page, limit, Sort.by("salary")));
     }
 
-    public Transaction findTransaction(String transactionId) {
+    Transaction findTransaction(String transactionId) {
         Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
-        Transaction transaction = optionalTransaction
+        return optionalTransaction
                 .orElseThrow(() -> new UserNotFoundException("No Transaction found with  id " + transactionId));
-        return transaction;
     }
 
-    public void deleteTransaction(Transaction transaction) {
+    void deleteTransaction(Transaction transaction) {
         transactionRepository.delete(transaction);
     }
 
-    public void deleteTransaction(String transactionId) {
+    void deleteTransaction(String transactionId) {
         Transaction transaction = findTransaction(transactionId);
         deleteTransaction(transaction);
     }
 
-    public Transaction saveTransaction(Transaction transaction) {
+    Transaction saveTransaction(Transaction transaction) {
         return transactionRepository.save(transaction);
     }
 
-    public Transaction updateTransaction(String transactionId, Transaction transactionInput) {
+    Transaction updateTransaction(String transactionId, Transaction transactionInput) {
         findTransaction(transactionId);
         return transactionRepository.save(transactionInput);
     }
@@ -55,7 +57,7 @@ public class TransactionService {
     }
 
     public void updateTransactionCategoryForAllTransactions(String oldCategory, String newCategory, String userId) {
-        transactionRepositoryCustom.updateTransactionCategoryForAllTransactions(oldCategory,newCategory,userId);
+        transactionRepositoryCustom.updateTransactionCategoryForAllTransactions(oldCategory, newCategory, userId);
     }
 
 }

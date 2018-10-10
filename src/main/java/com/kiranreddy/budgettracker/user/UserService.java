@@ -17,16 +17,16 @@ public class UserService {
 		this.passwordEncoder = passwordEncoder;
 	}
 
-	public List<User> retrieveUsers() {
+	List<User> retrieveUsers() {
 		return userRepository.findAll();
 	}
 
-	public User saveUser(User user) {
+	User saveUser(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
 	}
 
-	public User updateUser(String id, User inputUser) {
+	User updateUser(String id, User inputUser) {
 		Optional<User> optionalUser = userRepository.findById(id);
 		User user = optionalUser.orElseThrow(() -> new UserNotFoundException("No User found with user id " + id));
 		user.setFirstName(inputUser.getFirstName());
@@ -35,16 +35,16 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	public void deleteUser(User user) {
+	void deleteUser(User user) {
 		userRepository.delete(user);
 	}
 
-	public void deleteUser(String id) {
+	void deleteUser(String id) {
 		User user = findUser(id);
 		deleteUser(user);
 	}
 
-	public User findUser(String id) {
+	User findUser(String id) {
 		Optional<User> user = userRepository.findById(id);
 		return user.orElseThrow(() -> new UserNotFoundException("No User found with user id " + id));
 	}
