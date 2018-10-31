@@ -19,24 +19,23 @@ public class UserTest {
 
 	@Test
 	public void userCreationTest() {
-		User user = new User("id", "userName", "first", "last", "email@email.com", "password");
+		User user = new User("id", "userName", "first", "last", "email@email.com", "userId");
 		Assertions.assertThat(user.getId()).isEqualTo("id");
 		Assertions.assertThat(user.getFirstName()).isEqualTo("first");
 		Assertions.assertThat(user.getLastName()).isEqualTo("last");
 		Assertions.assertThat(user.getEmail()).isEqualTo("email@email.com");
-		Assertions.assertThat(user.getPassword()).isEqualTo("password");
+		Assertions.assertThat(user.getUserId()).isEqualTo("userId");
 	}
 
 	@Test
 	public void userMappingTest() {
-		User user = new User(null, "userName", "first", "last", "email@email.com", "password");
-		user.setPassword("password");
+		User user = new User(null, "userName", "first", "last", "email@email.com", "userId");
 		mongoTemplate.save(user);
 
 		Assertions.assertThat(user.getId()).isNotNull();
 		Assertions.assertThat(user.getFirstName()).isEqualTo("first");
 		Assertions.assertThat(user.getLastName()).isEqualTo("last");
 		Assertions.assertThat(user.getEmail()).isEqualTo("email@email.com");
-		Assertions.assertThat(user.getPassword()).isEqualTo("password");
+		Assertions.assertThat(user.getUserId()).isEqualTo("userId");
 	}
 }

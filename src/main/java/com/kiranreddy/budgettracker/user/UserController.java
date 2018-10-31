@@ -2,9 +2,7 @@ package com.kiranreddy.budgettracker.user;
 
 import com.kiranreddy.budgettracker.category.TransactionCategory;
 import com.kiranreddy.budgettracker.category.TransactionCategoryService;
-import com.kiranreddy.budgettracker.security.JwtTokenUtil;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

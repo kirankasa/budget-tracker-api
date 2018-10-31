@@ -18,20 +18,8 @@ public class UserRepositoryTest {
 	private UserRepository userRepository;
 
 	@Test
-	public void saveUserTest() {
-		User user = new User(null, "userName", "first", "last", "email@email.com", "password");
-		userRepository.save(user);
-
-		Assertions.assertThat(user.getId()).isNotNull();
-		Assertions.assertThat(user.getFirstName()).isEqualTo("first");
-		Assertions.assertThat(user.getLastName()).isEqualTo("last");
-		Assertions.assertThat(user.getEmail()).isEqualTo("email@email.com");
-		Assertions.assertThat(user.getPassword()).isEqualTo("password");
-	}
-
-	@Test
 	public void fetchUsersTest() {
-		User user = new User(null, "userName", "first", "last", "email@email.com", "password");
+		User user = new User(null, "userName", "first", "last", "email@email.com", "userId");
 		userRepository.save(user);
 		List<User> users = userRepository.findAll();
 
@@ -39,6 +27,6 @@ public class UserRepositoryTest {
 		Assertions.assertThat(users.iterator().next().getFirstName()).isEqualTo("first");
 		Assertions.assertThat(users.iterator().next().getLastName()).isEqualTo("last");
 		Assertions.assertThat(users.iterator().next().getEmail()).isEqualTo("email@email.com");
-		Assertions.assertThat(users.iterator().next().getPassword()).isEqualTo("password");
+		Assertions.assertThat(users.iterator().next().getUserId()).isEqualTo("userId");
 	}
 }

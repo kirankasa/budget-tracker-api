@@ -7,11 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 
-@Document(collection = "user")
+@Document(collection = "user_profile")
 public class User {
 
 	@Id
 	private String id;
+
+	private String userId;
 
 	private String userName;
 
@@ -21,19 +23,18 @@ public class User {
 
 	private String email;
 
-	@JsonProperty(access = Access.WRITE_ONLY)
-	private String password;
+
 
 	public User() {
 	}
 
-	public User(String id, String userName, String firstName, String lastName, String email, String password) {
+	public User(String id, String userName, String firstName, String lastName, String email, String userId) {
 		this.id = id;
 		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.password = password;
+		this.userId = userId;
 	}
 
 	public String getId() {
@@ -76,12 +77,11 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-
 }

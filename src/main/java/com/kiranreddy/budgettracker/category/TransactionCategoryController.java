@@ -1,6 +1,6 @@
 package com.kiranreddy.budgettracker.category;
 
-import com.kiranreddy.budgettracker.security.JwtUser;
+import com.kiranreddy.budgettracker.security.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +19,8 @@ public class TransactionCategoryController {
 	}
 
 	@GetMapping
-	public List<TransactionCategory> retrieveCategories(@AuthenticationPrincipal JwtUser user) {
-		return transactionCategoryService.retrieveTransactionCategories(user.getId());
+	public List<TransactionCategory> retrieveCategories(@AuthenticationPrincipal Authentication authentication) {
+		return transactionCategoryService.retrieveTransactionCategories(authentication.getUserId());
 	}
 
 	@GetMapping("/{id}")
@@ -30,15 +30,15 @@ public class TransactionCategoryController {
 
 	@PostMapping
 	public TransactionCategory saveTransactionCategory(@RequestBody TransactionCategory transactionCategory,
-			@AuthenticationPrincipal JwtUser user) {
-		transactionCategory.setUserId(user.getId());
+			@AuthenticationPrincipal Authentication authentication) {
+		transactionCategory.setUserId(authentication.getUserId());
 		return transactionCategoryService.saveTransactionCategory(transactionCategory);
 	}
 
 	@PutMapping("/{id}")
 	public TransactionCategory saveTransactionCategory(@PathVariable("id") String id,
-			@RequestBody TransactionCategory transactionCategory, @ApiIgnore @AuthenticationPrincipal JwtUser user) {
-		transactionCategory.setUserId(user.getId());
+			@RequestBody TransactionCategory transactionCategory, @ApiIgnore @AuthenticationPrincipal Authentication authentication) {
+		transactionCategory.setUserId(authentication.getUserId());
 		return transactionCategoryService.updateTransactionCategory(transactionCategory, id);
 	}
 

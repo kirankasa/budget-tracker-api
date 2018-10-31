@@ -1,6 +1,6 @@
 package com.kiranreddy.budgettracker.transaction;
 
-import com.kiranreddy.budgettracker.security.JwtUser;
+import com.kiranreddy.budgettracker.security.Authentication;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,10 +20,10 @@ public class TransactionController {
     }
 
     @GetMapping
-    public Page<Transaction> retrieveTransactions(@ApiIgnore @AuthenticationPrincipal JwtUser user,
+    public Page<Transaction> retrieveTransactions(@ApiIgnore @AuthenticationPrincipal Authentication authentication,
                                                   @RequestParam(value = "page", defaultValue = "0") int offset,
                                                   @RequestParam(value = "size", defaultValue = "20") int limit) {
-        return transactionService.retrieveTransactions(user.getId(), offset, limit);
+        return transactionService.retrieveTransactions(authentication.getUserId(), offset, limit);
     }
 
     @GetMapping("/{id}")
@@ -32,15 +32,15 @@ public class TransactionController {
     }
 
     @PostMapping
-    public Transaction saveTransaction(@RequestBody Transaction transaction, @ApiIgnore @AuthenticationPrincipal JwtUser user) {
-        transaction.setUserId(user.getId());
+    public Transaction saveTransaction(@RequestBody Transaction transaction, @ApiIgnore @AuthenticationPrincipal Authentication authentication) {
+        transaction.setUserId(authentication.getUserId());
         return transactionService.saveTransaction(transaction);
     }
 
     @PutMapping("/{id}")
     public Transaction updateTransaction(@PathVariable("id") String transactionId, @RequestBody Transaction transaction,
-                                         @AuthenticationPrincipal JwtUser user) {
-        transaction.setUserId(user.getId());
+                                         @AuthenticationPrincipal Authentication authentication) {
+        transaction.setUserId(authentication.getUserId());
         return transactionService.updateTransaction(transactionId, transaction);
     }
 
@@ -56,9 +56,9 @@ public class TransactionController {
     }
 
     @GetMapping("/amountPerCategory")
-    public List<AmountPerCategory> retrieveAmountPerCategory(@ApiIgnore @AuthenticationPrincipal JwtUser user,
+    public List<AmountPerCategory> retrieveAmountPerCategory(@ApiIgnore @AuthenticationPrincipal Authentication authentication,
                                                              @RequestParam("monthAndYear") String monthAndYear,
                                                              @RequestParam("transactionType") String transactionType) {
-        return transactionService.getAmountPerCategory(user.getId(), monthAndYear, transactionType);
+        return transactionService.getAmountPerCategory(authentication.getUserId(), monthAndYear, transactionType);
     }
 }

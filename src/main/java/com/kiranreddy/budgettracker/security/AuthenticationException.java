@@ -1,4 +1,4 @@
-package com.kiranreddy.budgettracker.auth;
+package com.kiranreddy.budgettracker.security;
 
 public class AuthenticationException extends RuntimeException {
 	/**
